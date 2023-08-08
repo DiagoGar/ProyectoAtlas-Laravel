@@ -2,16 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Almacen;
 use Illuminate\Http\Request;
 
 class AlmacenController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $almacenes = Almacen::all();
+        return $almacenes;
     }
 
     /**
@@ -27,15 +26,20 @@ class AlmacenController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $almacen = new Almacen();
+        $almacen->nombre = $request->nombre;
+        $almacen->rut = $request->rut;
+        $almacen->direccionAlmacen = $request->direccionAlmacen;
+
+        $almacen->save();
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Almacen $id)
     {
-        //
+        return response($id);
     }
 
     /**
@@ -51,14 +55,23 @@ class AlmacenController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $almacen = Almacen::findOrFail($request->id);
+
+        $almacen = new Almacen();
+        $almacen->nombre = $request->nombre;
+        $almacen->rut = $request->rut;
+        $almacen->direccionAlmacen = $request->direccionAlmacen;
+
+        $almacen->save();
+        return $almacen;
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Request $request)
     {
-        //
+        $almacen = Almacen::destroy($request->id);
+        return $almacen;
     }
 }
