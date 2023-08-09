@@ -53,11 +53,11 @@ class AlmacenController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request)
     {
-        $almacen = Almacen::findOrFail($request->id);
-
         $almacen = new Almacen();
+        
+        $almacen = Almacen::findOrFail($request->id);
         $almacen->nombre = $request->nombre;
         $almacen->rut = $request->rut;
         $almacen->direccionAlmacen = $request->direccionAlmacen;
