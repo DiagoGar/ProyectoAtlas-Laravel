@@ -10,16 +10,6 @@ Route::post('login', [AuthController::class, 'login']);
 Route::get('user-profile', [AuthController::class, 'userProfile']);
 Route::post('logout', [AuthController::class, 'logout']);
 
-// Route::middleware('auth:sanctum')->group('',function(){
-//     Route::get('user-profile', [AuthController::class, 'userProfile']);
-//     Route::post('logout', [AuthController::class, 'logout']);
-//   });
-
-// Route::group(['middleware' => ['auth:sanctum']], function(){
-//   Route::get('user-profile', [AuthController::class, 'userProfile']);
-//   Route::post('logout', [AuthController::class, 'logout']);
-// });
-
 Route::get('/almacen', [AlmacenController::class, 'index']);
 Route::post('/almacen', [AlmacenController::class, 'store']);
 Route::get('/almacen/{id}', [AlmacenController::class, 'show']);
