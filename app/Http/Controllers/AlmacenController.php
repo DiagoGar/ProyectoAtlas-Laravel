@@ -7,6 +7,12 @@ use Illuminate\Http\Request;
 
 class AlmacenController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth:api');
+    }
+
     public function index()
     {
         $almacenes = Almacen::all();
