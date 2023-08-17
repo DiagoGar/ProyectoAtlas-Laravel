@@ -16,7 +16,8 @@ class AlmacenController extends Controller
     public function index()
     {
         $almacenes = Almacen::all();
-        return $almacenes;
+        return view('almacenes.index')->with('almacenes',$almacenes);
+        //no funciona de momento
     }
 
     /**
@@ -38,6 +39,11 @@ class AlmacenController extends Controller
         $almacen->direccionAlmacen = $request->direccionAlmacen;
 
         $almacen->save();
+
+        return view('almacenes.store', [
+            'nombre' => $almacen->nombre,
+            'rut' => $almacen->rut, 
+            'direccionAlmacen' => $almacen->direccionAlmacen]);
     }
 
     /**
