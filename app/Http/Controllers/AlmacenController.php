@@ -51,7 +51,7 @@ class AlmacenController extends Controller
      */
     public function show(Almacen $id)
     {
-        return response($id);
+        return view('almacenes.show', ['id' => $id]);
     }
 
     /**
