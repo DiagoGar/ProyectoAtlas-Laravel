@@ -1,9 +1,30 @@
 @extends('layouts.almacenes')
 
-@section('nombre')
+@section('table')
+<div class="relative overflow-x-auto">
+  <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+      <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+          <tr>
+              <th scope="col" class="px-6 py-3">
+                  Nombre
+              </th>
+              <th scope="col" class="px-6 py-3">
+                  RUT
+              </th>
+              <th scope="col" class="px-6 py-3">
+                  DIrección
+              </th>
+          </tr>
+      </thead>
+      <tbody>
 @foreach($almacenes as $item)
-Nombre: {{ $item['nombre']}} <br>
-Rut: {{ $item['rut']}} <br>
-Direccion: {{ $item['direccionAlmacen']}} <br>
-@endforeach
+          <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+            <td class="p-5">{{ $item['nombre']}} </td>
+            <td class="p-5">{{ $item['rut']}}</td>
+            <td class="p-5">{{ $item['direccionAlmacen']}}</td>
+          </tr>
+          @endforeach
+        </tbody>
+    </table>
+</div>
 @endsection
