@@ -75,7 +75,10 @@ class AlmacenController extends Controller
         $almacen->direccionAlmacen = $request->direccionAlmacen;
 
         $almacen->save();
-        return $almacen;
+        return view('almacenes.store', [
+            'nombre' => $almacen->nombre,
+            'rut' => $almacen->rut, 
+            'direccionAlmacen' => $almacen->direccionAlmacen]);
     }
 
     /**
