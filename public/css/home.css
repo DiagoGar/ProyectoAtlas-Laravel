@@ -1,0 +1,75 @@
+body{
+  background-image: url("../assets/img/homeBackground.jpeg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  position: relative;
+}
+
+.content-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+  align-items: center;
+}
+
+.nav-ul a{
+  color: #000;
+}
+
+.container-login{
+  display: none;
+  background-color: #00000056;
+  width: 100%;
+  height: 100%;
+}
+
+.login-showed{
+  position: absolute;
+  display: none;
+  top: 15%;
+  left: 50%;
+  transform: translate(-50%, -10%);
+  text-align: center;
+  background-color: #cdde37eb;
+  width: 30vw;
+  height: 70vh;
+  border-radius: 15px;
+}
+
+.login-showed form{
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  width: 100%;
+  height: 80%;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-showed h3{
+  font-size:30px;
+}
+
+.login-showed input{
+  background-color: #ccde37;
+  border-bottom: 2px solid #000;
+  color: #000;
+  width: 70%;
+}
+
+.login-showed input:focus{
+  outline: none;
+}
+
+.login-showed input[type=submit]{
+  margin-top: 5px;
+  border: 2px solid #888;
+  border-radius: 10px;
+  width: 70%;
+}
+
+.montevideo-map{
+  height: 50px;
+}
