@@ -1,20 +1,37 @@
 <?php
 
+/**
+ * Created by Reliese Model.
+ */
+
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Class Almacen
+ * 
+ * @property int $id
+ * @property string $nombre
+ * @property string $rut
+ * @property int $direccionAlmacen
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ *
+ * @package App\Models
+ */
 class Almacen extends Model
 {
-    use HasFactory;
+	protected $table = 'almacen';
 
-    protected $table = "almacen";
+	protected $casts = [
+		'direccionAlmacen' => 'int'
+	];
 
-    protected $fillable = [
-        'idAlmacen',
-        'nombre',
-        'rut',
-        'direccionAlmacen'
-    ];
+	protected $fillable = [
+		'nombre',
+		'rut',
+		'direccionAlmacen'
+	];
 }
