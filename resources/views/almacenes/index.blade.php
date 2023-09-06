@@ -14,14 +14,21 @@
               <th scope="col" class="px-6 py-3">
                   DIrección
               </th>
+              <th>
+                Accion
+              </th>
           </tr>
       </thead>
       <tbody>
 @foreach($almacenes as $item)
           <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-            <td class="p-5">{{ $item['nombre']}} </td>
+            <td class="p-5">{{ $item['nombre']}}</td>
             <td class="p-5">{{ $item['rut']}}</td>
             <td class="p-5">{{ $item['direccionAlmacen']}}</td>
+            <td>
+                <button><a>Eliminar</a></button>
+                <button><a>Editar</a></button>
+            </td>
           </tr>
           @endforeach
         </tbody>
