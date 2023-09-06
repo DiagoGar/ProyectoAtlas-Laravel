@@ -18,5 +18,5 @@ Route::get('/', function () {
 });
 
 Route::get('/login', function(){
-    return $_SERVER;
+    return view('login');
 })->name('login');
