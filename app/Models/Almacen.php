@@ -6,32 +6,51 @@
 
 namespace App\Models;
 
-use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class Almacen
  * 
- * @property int $id
- * @property string $nombre
- * @property string $rut
- * @property int $direccionAlmacen
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
+ * @property int $idAlmacen
+ * @property int|null $rut
+ * @property string|null $nombre
+ * 
+ * @property Collection|Almacendireccion[] $almacendireccions
+ * @property Almacendireccion $almacendireccion
+ * @property Collection|Producto[] $productos
  *
  * @package App\Models
  */
 class Almacen extends Model
 {
 	protected $table = 'almacen';
+	protected $primaryKey = 'idAlmacen';
+	public $incrementing = false;
+	public $timestamps = false;
 
 	protected $casts = [
-		'direccionAlmacen' => 'int'
+		'idAlmacen' => 'int',
+		'rut' => 'int'
 	];
 
 	protected $fillable = [
-		'nombre',
 		'rut',
-		'direccionAlmacen'
+		'nombre'
 	];
+
+	public function almacendireccions()
+	{
+		return $this->hasMany(Almacendireccion::class, 'direccionAlmacen', 'direccionAlmacen');
+	}
+
+	public function almacendireccion()
+	{
+		return $this->hasOne(Almacendireccion::class, 'idAlmacen');
+	}
+
+	public function productos()
+	{
+		return $this->belongsToMany(Producto::class, 'productos_almacen', 'idAlmacen', 'idProductos');
+	}
 }

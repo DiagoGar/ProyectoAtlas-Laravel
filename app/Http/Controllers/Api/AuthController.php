@@ -3,7 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
+use App\Models\Usuario;
+// use App\Models\Usuarios;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -22,17 +23,30 @@ class AuthController extends Controller
     public function register(Request $request){
         //validacion de datos
         $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6'
+            'cedulaUsuario' => 'required',
+            'nombreUsuario' => 'required|string|max:255',
+            'mail' => 'required|string|email|max:255',
+            'password' => 'required|string|min:6',
+            'tipoUsuario' => 'required|string'
         ]);
 
         // alta de usuario
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
+
+        $user = new Usuario();
+        $user -> cedulaUsuario = $request->cedulaUsuario;
+        $user -> nombreUsuario = $request->nombreUsuario;
+        $user -> mail = $request->mail;
+        $user -> password = Hash::make($request->password);
+        $user -> tipoUsuario = $request->tipoUsuario;
+        $user->save();
+
+        // $user = Usuario::create([
+        //     'cedulaUsuario' => $request->cedulaUsuario,
+        //     'nombreUsuario' => $request->nombreUsuario,
+        //     'tipoUsuario' => $request->userType,
+        //     'mail' => $request->email,
+        //     'password' => Hash::make($request->password),
+        // ]);
 
         //respuesta
         $token = Auth::login($user);
@@ -49,11 +63,11 @@ class AuthController extends Controller
 
     public function login(Request $request){
         $credentials = $request->validate([
-            'email' => 'required|email',
+            'mail' => 'required|email',
             'password' => 'required|string'
         ]);
 
-        $credentials = $request->only('email', 'password');
+        $credentials = $request->only('mail', 'password');
 
         $token = Auth::attempt($credentials);
 
