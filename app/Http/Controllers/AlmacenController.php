@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Almacen;
+use App\Models\Nodo;
+use App\Models\Nododireccion;
+use App\Models\Ruta;
 use Illuminate\Http\Request;
 
 class AlmacenController extends Controller
@@ -15,8 +17,8 @@ class AlmacenController extends Controller
 
     public function index()
     {
-        $almacenes = Almacen::all();
-        return view('almacenes.index')->with('almacenes',$almacenes);
+        $nodoDireccion = Nododireccion::all();
+        return view('almacenes.index')->with('nodos',$nodoDireccion);
         //no funciona de momento
     }
 
@@ -33,23 +35,39 @@ class AlmacenController extends Controller
      */
     public function store(Request $request)
     {
-        $almacen = new Almacen();
-        $almacen->nombre = $request->nombre;
-        $almacen->rut = $request->rut;
-        $almacen->direccionAlmacen = $request->direccionAlmacen;
+        $ruta = new Ruta();
+        $nodo = new Nodo();
+        $nodoDireccion = new Nododireccion();
 
-        $almacen->save();
+        $nodo->nombreNodo = $request->nombreNodo;
+        $nodoDireccion->calle = $request->calle;
+        $nodoDireccion->rutaAcceso = $request->rutaAcceso;
+        $nodoDireccion->ciudad = $request->ciudad;
+        $nodoDireccion->numeroPuerta = $request->numeroPuerta;
+
+        $ruta->idRutas = $request->idRutas;
+        $nodo->esFinal = $request->esFinal;
+
+        $nodo->save();
+
+        $nodoDireccion->idNodos = $nodo->idNodos;
+
+        $nodoDireccion->save();
 
         return view('almacenes.store', [
-            'nombre' => $almacen->nombre,
-            'rut' => $almacen->rut, 
-            'direccionAlmacen' => $almacen->direccionAlmacen]);
+            'nombreNodo' => $nodo->nombreNodo,
+            'esFinal' => $nodo->esFinal,
+            'ciudad' => $nodoDireccion->ciudad,
+            'calle' => $nodoDireccion->calle,
+            'rutaAcceso' => $nodoDireccion->rutaAcceso,
+            'numeroPuerta' => $nodoDireccion->numeroPuerta
+        ]);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Almacen $id)
+    public function show(Nododireccion $id)
     {
         return view('almacenes.show', ['id' => $id]);
     }
@@ -67,18 +85,35 @@ class AlmacenController extends Controller
      */
     public function update(Request $request)
     {
-        $almacen = new Almacen();
+        $nodo = new Nodo();
+        $nodoDireccion = new Nododireccion();
         
-        $almacen = Almacen::findOrFail($request->id);
-        $almacen->nombre = $request->nombre;
-        $almacen->rut = $request->rut;
-        $almacen->direccionAlmacen = $request->direccionAlmacen;
+        $nodoDireccion = Nododireccion::findOrFail($request->id);
+        $nodo = Nodo::findOrFail($request->id);
+        
+        $nodo->nombreNodo = $request->nombreNodo;
+        $nodoDireccion->calle = $request->calle;
+        $nodoDireccion->rutaAcceso = $request->rutaAcceso;
+        $nodoDireccion->ciudad = $request->ciudad;
+        $nodoDireccion->numeroPuerta = $request->numeroPuerta;
 
-        $almacen->save();
+        $nodo->esFinal = $request->esFinal;
+
+        $nodo->save();
+
+        $nodoDireccion->idNodos = $nodo->idNodos;
+
+        $nodoDireccion->save();
+
+        $nodo->save();
         return view('almacenes.store', [
-            'nombre' => $almacen->nombre,
-            'rut' => $almacen->rut, 
-            'direccionAlmacen' => $almacen->direccionAlmacen]);
+            'nombreNodo' => $nodo->nombreNodo,
+            'esFinal' => $nodo->esFinal,
+            'ciudad' => $nodoDireccion->ciudad,
+            'calle' => $nodoDireccion->calle,
+            'rutaAcceso' => $nodoDireccion->rutaAcceso,
+            'numeroPuerta' => $nodoDireccion->numeroPuerta
+        ]);
     }
 
     /**
@@ -86,7 +121,7 @@ class AlmacenController extends Controller
      */
     public function destroy(Request $request)
     {
-        $almacen = Almacen::destroy($request->id);
-        return $almacen;
+        $nodo = Nododireccion::destroy($request->id);
+        return $nodo;
     }
 }
