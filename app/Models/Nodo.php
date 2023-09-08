@@ -27,7 +27,7 @@ class Nodo extends Model
 {
 	protected $table = 'nodos';
 	protected $primaryKey = 'idNodos';
-	public $incrementing = false;
+	public $incrementing = true;
 	public $timestamps = false;
 
 	protected $casts = [
