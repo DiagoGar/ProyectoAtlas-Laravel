@@ -58,7 +58,7 @@
     <div class="container">
       <div class="botones">
         <button class="login-button">Iniciar Sesión</button>
-        <button class="register-button">Registrarse</button>
+        <button class="register-button">Ver lotes</button>
         <button class="generate-button">Hacer un envío</button>
         <button class="track-button">Rastrear un envío</button>
       </div>

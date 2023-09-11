@@ -35,6 +35,14 @@ body{
   opacity: .7;
 }
 
+@media (max-width: 700px) {
+  .form_main{
+    margin-top: 25%;
+    max-width: 15rem;
+    max-height:25rem;
+  }
+}
+
 .heading {
   font-size: 2em;
   color: #2e2e2e;
