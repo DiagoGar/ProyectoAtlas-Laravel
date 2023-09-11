@@ -12,6 +12,6 @@ Route::post('logout', [AuthController::class, 'logout']);
 
 Route::get('/almacen', [AlmacenController::class, 'index']);
 Route::post('/almacen', [AlmacenController::class, 'store']);
-Route::get('/almacen/{id}', [AlmacenController::class, 'show']);
-Route::put('/almacen/{id}', [AlmacenController::class, 'update'])->name('edit');
-Route::delete('/almacen/{id}', [AlmacenController::class, 'destroy'])->name('delete');
+// Route::get('/almacen/{id}', [AlmacenController::class, 'show']);
+Route::post('/almacen/{id}', [AlmacenController::class, 'update'])->name('edit');
+Route::get('/almacen/{id}', [AlmacenController::class, 'destroy'])->name('delete');
