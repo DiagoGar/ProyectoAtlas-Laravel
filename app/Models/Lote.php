@@ -28,18 +28,16 @@ class Lote extends Model
 {
 	protected $table = 'lotes';
 	protected $primaryKey = 'idLotes';
-	public $incrementing = false;
+	public $incrementing = true;
 	public $timestamps = false;
 
 	protected $casts = [
 		'idLotes' => 'int',
-		'idRemitos' => 'int',
 		'cedulaFuncionario' => 'int',
 		'cantidadProductos' => 'int'
 	];
 
 	protected $fillable = [
-		'idRemitos',
 		'cedulaFuncionario',
 		'cantidadProductos'
 	];
@@ -49,10 +47,10 @@ class Lote extends Model
 		return $this->belongsTo(Tipofuncionario::class, 'cedulaFuncionario');
 	}
 
-	public function remito()
-	{
-		return $this->belongsTo(Remito::class, 'idRemitos');
-	}
+	// public function remito()
+	// {
+	// 	return $this->belongsTo(Remito::class, 'idRemitos');
+	// }
 
 	public function lote_remitosproductosalmacens()
 	{
@@ -63,5 +61,17 @@ class Lote extends Model
 	{
 		return $this->belongsToMany(Movimiento::class, 'lotes_movimientos', 'idLotes', 'idMovimientos')
 					->withPivot('estado', 'fechaLlegada');
+	}
+
+	public function jsonSerialize(): mixed
+	{
+		return [
+			'idLotes' => $this->idLotes,
+			// 'idRemito' => $this->remito(),
+			'cedulaFuncionario' => $this->tipofuncionario(),
+			'cantidad' => $this->cantidadProductos,
+			'lote_rpa' => $this->lote_remitosproductosalmacens(),
+			'movimientos' => $this->movimientos()
+		];
 	}
 }

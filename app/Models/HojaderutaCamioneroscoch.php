@@ -50,4 +50,14 @@ class HojaderutaCamioneroscoch extends Model
 	{
 		return $this->belongsTo(Hojaderutum::class, 'idHojaDeRuta');
 	}
+
+	public function jsonSerialize(): mixed
+	{
+		return [
+			'idHojaDeRuta' => $this->hojaderutum(),
+			'cedulaCamionero' => $this->cedulaCamionero,
+			'fechaArranque' => $this->fechaArranque,
+			'patente' => $this->camioneros_coch()
+		];
+	}
 }

@@ -56,4 +56,14 @@ class Nodo extends Model
 	{
 		return $this->hasOne(Nododireccion::class, 'idNodos');
 	}
+
+	public function jsonSerialize(): mixed
+	{
+		return [
+			'idNodos' => $this->idNodos,
+			'idRutas' => $this->idRutas,
+			'nombreNodo' => $this->nombreNodo,
+			'esFinal' => $this->esFinal
+		];
+	}
 }

@@ -53,4 +53,16 @@ class Almacen extends Model
 	{
 		return $this->belongsToMany(Producto::class, 'productos_almacen', 'idAlmacen', 'idProductos');
 	}
+
+	public function jsonSerialize(): mixed
+	{
+		return [
+			'idAlmacen' => $this->idAlmacen,
+			'direccion' => $this->almacendireccion(),
+			'rut' => $this->rut,
+			'nombre' => $this->nombre,
+			'nodos' => $this->almacendireccions(),
+			'productos' => $this->productos()
+		];
+	}
 }

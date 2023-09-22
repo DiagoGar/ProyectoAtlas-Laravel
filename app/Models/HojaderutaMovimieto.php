@@ -44,4 +44,12 @@ class HojaderutaMovimieto extends Model
 	{
 		return $this->belongsTo(Movimiento::class, 'idMovimientos');
 	}
+
+	public function jsonSerialize(): mixed
+	{
+		return [
+			'idMovimientos' => $this->movimiento(),
+			'idHojaDeRuta' => $this->hojaderutum()
+		];
+	}
 }
