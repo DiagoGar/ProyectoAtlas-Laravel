@@ -47,11 +47,6 @@ class Lote extends Model
 		return $this->belongsTo(Tipofuncionario::class, 'cedulaFuncionario');
 	}
 
-	// public function remito()
-	// {
-	// 	return $this->belongsTo(Remito::class, 'idRemitos');
-	// }
-
 	public function lote_remitosproductosalmacens()
 	{
 		return $this->hasMany(LoteRemitosproductosalmacen::class, 'idLotes');
@@ -67,7 +62,6 @@ class Lote extends Model
 	{
 		return [
 			'idLotes' => $this->idLotes,
-			// 'idRemito' => $this->remito(),
 			'cedulaFuncionario' => $this->tipofuncionario(),
 			'cantidad' => $this->cantidadProductos,
 			'lote_rpa' => $this->lote_remitosproductosalmacens(),
