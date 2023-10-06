@@ -1,47 +1,38 @@
 @extends('layouts.almacenes')
 
-@section('title', 'Almacenes')
+@section('title', 'Lotes')
 
-@section('object', 'Almacenes')
+@section('object', 'Lotes')
 
-@section('table')
+@section("table")
 <div class="relative overflow-x-auto">
   <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
       <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
           <tr>
               <th scope="col" class="px-6 py-3">
-                  Id nodo
+                  Encargado del lote
               </th>
               <th scope="col" class="px-6 py-3">
-                  calle
+                  Id Lote
             </th>
               <th scope="col" class="px-6 py-3">
-                  numero de puerta
+                  Cantidad de productos
               </th>
               <th scope="col" class="px-6 py-3">
-                  ciudad
-              </th>
-              <th scope="col" class="px-6 py-3">
-                  ruta de acceso
-              </th>
-              <th scope="col" class="px-6 py-3">
-                Accion
+                Acciones
             </th>
           </tr>
       </thead>
       <tbody>
-@foreach($nodos as $item)
+@foreach($data as $item)
           <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-            <td class="p-5">{{ $item['idNodos']}}</td>
-            <td class="p-5">{{ $item['calle']}}</td>
-            <td class="p-5">{{ $item['numeroPuerta']}}</td>
-            <td class="p-5">{{ $item['ciudad']}}</td>
-            <td class="p-5">{{ $item['rutaAcceso']}}</td>
+            <td class="p-5">CI 46665550</td>
+            <td class="p-5">{{ $item['idLotes']}}</td>
+            <td class="p-5">{{ $item['cantidad']}}</td>
             <td>
                 {{-- <button><a href="http://localhost:8000/api/almacen/?id=" . $item['idNodos']>Eliminar</a></button> --}}
-                <button><a href="#">Eliminar</a></button>
                 <button><a>Editar</a></button>
-                <button><a href="#">Ver Lotes</a></button>
+                <button><a href="/api/productos">Ver Productos</a></button>
             </td>
           </tr>
           @endforeach

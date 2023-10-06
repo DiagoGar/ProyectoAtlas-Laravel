@@ -27,7 +27,7 @@ class Remito extends Model
 {
 	protected $table = 'remitos';
 	protected $primaryKey = 'idRemitos';
-	public $incrementing = false;
+	public $incrementing = true;
 	public $timestamps = false;
 
 	protected $casts = [

@@ -24,7 +24,7 @@ class Producto extends Model
 {
 	protected $table = 'productos';
 	protected $primaryKey = 'idProductos';
-	public $incrementing = false;
+	public $incrementing = true;
 	public $timestamps = false;
 
 	protected $casts = [

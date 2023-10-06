@@ -31,7 +31,7 @@ class Movimiento extends Model
 {
 	protected $table = 'movimientos';
 	protected $primaryKey = 'idMovimientos';
-	public $incrementing = false;
+	public $incrementing = true;
 	public $timestamps = false;
 
 	protected $casts = [
