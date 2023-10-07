@@ -1,8 +1,8 @@
 @extends('layouts.almacenes')
 
-@section('title', 'Lotes')
+@section('title', 'Productos')
 
-@section('object', 'Lotes')
+@section('object', 'Productos')
 
 @section("table")
 <div class="relative overflow-x-auto">
@@ -10,13 +10,13 @@
       <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
           <tr>
               <th scope="col" class="px-6 py-3">
-                  Encargado del lote
+                  Id Productos
               </th>
               <th scope="col" class="px-6 py-3">
-                  Id Lote
+                  Nombre producto
             </th>
               <th scope="col" class="px-6 py-3">
-                  Cantidad de productos
+                  Peso del producto
               </th>
               <th scope="col" class="px-6 py-3">
                 Acciones
@@ -26,17 +26,22 @@
       <tbody>
 @foreach($data as $item)
           <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 text-center">
-            <td class="p-5">CI 46665550</td>
-            <td class="p-5">{{ $item['idLotes']}}</td>
-            <td class="p-5">{{ $item['cantidad']}}</td>
+            <td class="p-5">{{ $item['idProductos']}}</td>
+            <td class="p-5">{{ $item['nobreProducto']}}</td>
+            <td class="p-5">{{ $item['pesoProducto']}} Kg</td>
             <td>
                 {{-- <button><a href="http://localhost:8000/api/almacen/?id=" . $item['idNodos']>Eliminar</a></button> --}}
+                <button><a href="#">Eliminar</a></button>
                 <button><a>Editar</a></button>
-                <button><a href="productos">Ver Productos</a></button>
             </td>
           </tr>
           @endforeach
         </tbody>
     </table>
 </div>
+
+<div class="text-center">
+  <Button><a href="#">Agregar Producto</a></Button>
+</div>
+
 @endsection
