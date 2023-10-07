@@ -4,6 +4,7 @@ use App\Http\Controllers\AlmacenController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LoteController;
 use App\Http\Controllers\TransitoController;
+use App\Http\Controllers\webController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\Authenticate;
@@ -25,12 +26,9 @@ Route::get('/', function () {
     return view('homepage');
 });
 
-Route::get('/lotes', function(){
-    $request = Request::create('/api/lotes', 'GET');
-    $response = Route::dispatch($request);
-    $data = json_decode($response->getContent(), true);
-    return view('lotes.index', ['data' => $data]);
-});
+Route::get('/lotes', [webController::class, 'indexLotes']);
+
+Route::get('/productos', [webController::class, 'indexProductos']);
 
 // Route::get('/prueba', function () {
     // $response = Http::get('/api/lotes/');
