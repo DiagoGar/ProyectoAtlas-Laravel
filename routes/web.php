@@ -30,15 +30,6 @@ Route::get('/lotes', [webController::class, 'indexLotes']);
 
 Route::get('/productos', [webController::class, 'indexProductos']);
 
-// Route::get('/prueba', function () {
-    // $response = Http::get('/api/lotes/');
-    // dd($response);
-    // $request = Request::create('/api/lotes', 'GET');
-    // $response = Route::dispatch($request);
-    // $c_data = json_decode($response->getContent(), true);
-    // return view('welcome', ['data' => $c_data]);
-// });
-
 Route::get('/login', function(){
     return view('login');
 })->name('login');
