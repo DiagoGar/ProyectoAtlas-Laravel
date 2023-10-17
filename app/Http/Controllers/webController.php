@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Lote;
+use App\Models\Producto;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -26,7 +28,9 @@ class webController extends Controller
 
   public function guardarpaqueteInLote(Request $request)
   {
-
+    $lote = Lote::all();
+    $producto = Producto::all();
+    return view('forms.guardarPaqueteInLote', ['lotes' => $lote, 'productos' => $producto]);
   }
 
   // --------/-\/-\/-\--------Lotes Section--------/-\/-\/-\-------- //

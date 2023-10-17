@@ -40,7 +40,7 @@
 </div>
 
 <div class="text-center my-5">
-  <Button class="my-3 bg-orange-400 p-3 rounded-xl"><a href="/guardarProductosInLote">Agregar Producto</a></Button>
+  <Button class="my-3 bg-orange-400 p-3 rounded-xl"><a href="/productosInLote">Agregar Producto</a></Button>
 </div>
 
 @endsection

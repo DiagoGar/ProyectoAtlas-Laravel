@@ -29,7 +29,7 @@ Route::get('/', function () {
 Route::get('/lotes', [webController::class, 'indexLotes']);
 
 Route::get('productosInLote/{id}', [webController::class, 'verProductoInLote']);
-Route::view('productosInLote', 'forms.guardarPaqueteInLote');
+Route::get('productosInLote', [webController::class, 'guardarpaqueteInLote']);
 
 Route::get('/productos', [webController::class, 'indexProductos']);
 Route::view('/agregarProducto', 'forms.storeProduct')->name('storeProduct');
