@@ -22,9 +22,12 @@ Route::post('/almacen/{id}', [AlmacenController::class, 'update'])->name('edit')
 Route::get('/almacen/{id}', [AlmacenController::class, 'destroy'])->name('delete');
 
 Route::get('/productos', [ProductoController::class, "index"]);
+Route::get('/producto/{id}', [ProductoController::class, 'show']);
+Route::get('/productos/{id}', [ProductoController::class, 'destroy']);
 Route::post('/productos', [ProductoController::class, "store"]);
+Route::post('/productos/{id}', [ProductoController::class, 'update']);
 
-Route::get('/productosInLote', [LoteController::class, 'VerPaqueteInLote']);
+Route::get('/productosInLote/{id}', [LoteController::class, 'VerPaqueteInLote']);
 Route::post('/productosInLote', [LoteController::class, "GuardarPaqueteInLote"]);
 
 Route::get('/lotes', [LoteController::class, 'index']);

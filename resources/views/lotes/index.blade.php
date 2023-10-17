@@ -1,4 +1,4 @@
-@extends('layouts.almacenes')
+@extends('layouts.actions')
 
 @section('title', 'Lotes')
 
@@ -32,11 +32,16 @@
             <td>
                 {{-- <button><a href="http://localhost:8000/api/almacen/?id=" . $item['idNodos']>Eliminar</a></button> --}}
                 <button><a>Editar</a></button>
-                <button><a href="productos">Ver Productos</a></button>
+                <button><a href="productosInLote/{{$item['idLotes']}}">Ver Productos</a></button>
             </td>
           </tr>
           @endforeach
         </tbody>
     </table>
 </div>
+
+<div class="text-center my-5">
+  <Button class="my-3 bg-orange-400 py-3 px-5 rounded-xl"><a href="#">Crear Lote</a></Button>
+</div>
+
 @endsection

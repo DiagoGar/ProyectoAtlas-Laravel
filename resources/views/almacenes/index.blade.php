@@ -1,4 +1,4 @@
-@extends('layouts.action')
+@extends('layouts.actions')
 
 @section('title', 'Almacenes')
 

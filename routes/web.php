@@ -28,7 +28,14 @@ Route::get('/', function () {
 
 Route::get('/lotes', [webController::class, 'indexLotes']);
 
+Route::get('productosInLote/{id}', [webController::class, 'verProductoInLote']);
+Route::view('productosInLote', 'forms.guardarPaqueteInLote');
+
 Route::get('/productos', [webController::class, 'indexProductos']);
+Route::view('/agregarProducto', 'forms.storeProduct')->name('storeProduct');
+// Route::view('editarProdcuto', 'forms.updateProduct')->name('updateProduct');
+Route::get('/edita-producto/{id}', [webController::class, 'updateProduct']);
+
 
 Route::get('/login', function(){
     return view('login');

@@ -45,11 +45,11 @@ class LoteRemitosproductosalmacen extends Model
 		return $this->belongsTo(RemitosProductosalmacen::class, 'idRemitos');
 	}
 
-	public function jsonSerialize(): mixed
-	{
-		return [
-			'idlote' => $this->lote(),
-			'rpa' => $this->remitos_productosalmacen(),
-		];
-	}
+	// public function jsonSerialize(): mixed
+	// {
+	// 	return [
+	// 		'idlote' => $this->lote(),
+	// 		'rpa' => $this->remitos_productosalmacen(),
+	// 	];
+	// }
 }
