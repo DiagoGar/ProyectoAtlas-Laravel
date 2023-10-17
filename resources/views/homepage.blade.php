@@ -59,7 +59,7 @@
     <div class="container">
       <div class="botones">
         <button class="login-button">Iniciar Sesión</button>
-        <button class="register-button">Ver lotes</button>
+        <a href="/lotes"><button class="register-button">Ver lotes</button></a>
         <button><a href="{{ route('show')}}" class="generate-button">Ver nodos</a></button>
         <button class="track-button">Rastrear un envío</button>
       </div>
