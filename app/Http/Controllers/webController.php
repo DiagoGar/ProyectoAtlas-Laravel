@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Lote;
 use App\Models\Producto;
+use App\Models\RemitosProductosalmacen;
+use App\Models\Tipofuncionario;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -18,6 +20,11 @@ class webController extends Controller
     return view('lotes.index', ['data' => $data]);
   }
 
+  public function storeLote(){
+    $cedulafuncionario = Tipofuncionario::select('cedulaFuncionario')->get();
+    return view('forms.storeLote', ['funcionario' => $cedulafuncionario]);
+  }
+
   public function verProductoInLote(Request $request){
     $id = $request->id;
     $request = Request::create('api/productosInLote/'.$id, 'GET');
@@ -30,10 +37,20 @@ class webController extends Controller
   {
     $lote = Lote::all();
     $producto = Producto::all();
-    return view('forms.guardarPaqueteInLote', ['lotes' => $lote, 'productos' => $producto]);
+    $productoSinLote = Remitosproductosalmacen::select('remitos_productosalmacen.idRemitos', 'remitos_productosalmacen.idProductos', 'productos.nombreProducto')
+    ->join('productos_almacen', 'remitos_productosalmacen.idRemitos', '=', 'productos_almacen.idProductos')
+    ->join('productos', 'productos_almacen.idProductos', '=', 'productos.idProductos')
+    ->whereNotIn('remitos_productosalmacen.idRemitos', function ($query) {
+        $query->select('idRemitos')
+            ->from('lote_remitosproductosalmacen')
+            ->whereColumn('productos.idProductos', '=', 'remitos_productosalmacen.idRemitos');
+    })
+    ->get();
+
+    return view('forms.guardarPaqueteInLote', ['lotes' => $lote, 'productoSinRemitos' => $productoSinLote]);
   }
 
-  // --------/-\/-\/-\--------Lotes Section--------/-\/-\/-\-------- //
+  // --------/-\/-\/-\--------Products Section--------/-\/-\/-\-------- //
 
   public function indexProductos()
   {

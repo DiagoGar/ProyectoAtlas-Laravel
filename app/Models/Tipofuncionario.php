@@ -45,12 +45,12 @@ class Tipofuncionario extends Model
 		return $this->hasMany(Lote::class, 'cedulaFuncionario');
 	}
 
-	public function jsonSerialize(): mixed
-	{
-		return [
-			'cedulaFuncionario' => $this->usuario(),
-			'cargo' => $this->cargo,
-			'lotes' => $this->lotes(),
-		];
-	}
+	// public function jsonSerialize(): mixed
+	// {
+	// 	return [
+	// 		'cedulaFuncionario' => $this->usuario(),
+	// 		'cargo' => $this->cargo,
+	// 		'lotes' => $this->lotes(),
+	// 	];
+	// }
 }
