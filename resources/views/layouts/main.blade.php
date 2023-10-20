@@ -17,8 +17,8 @@
         ><img src="../assets/img/logoDeSoftware.png" class="image"><span>FastCarry</span></a
       >
       <div class="main">
-        <a href="{{ route('login') }}">Iniciar Sesión</a>
-        <a href="#">Registrarse</a>
+        <a href="/">Inicio</a>
+        <a href="#">log Out</a>
         <div class="bx bx-menu" id="menu-icon"></div>
       </div>
     </header>
