@@ -49,7 +49,7 @@ class LoteController extends Controller
 
         $lotemovimiento->save();
 
-        return $lote;
+        return redirect('/lotes');
     }
 
     public function update(Request $request)
@@ -81,11 +81,14 @@ class LoteController extends Controller
 
     public function GuardarPaqueteInLote(Request $req)
     {
-        $lrpa = new LoteRemitosproductosalmacen();
-        $lrpa->idLotes = $req->idLotes;
-        $lrpa->idRemitos = $req->idRemitos;
-
-        $lrpa->save();
+        $idRemitos = $req->input('idRemitos');
+        foreach($idRemitos as $idRemito){            
+            $lrpa = new LoteRemitosproductosalmacen();
+            $lrpa->idLotes = $req->idLotes;
+            $lrpa->idRemitos = $idRemito;
+    
+            $lrpa->save();
+        };
 
         return redirect('/productosInLote/'.$lrpa->idLotes);
     }

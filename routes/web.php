@@ -27,6 +27,7 @@ Route::get('/', function () {
 });
 
 Route::get('/lotes', [webController::class, 'indexLotes']);
+Route::get('/crearLote', [webController::class, 'storeLote']);
 
 Route::get('productosInLote/{id}', [webController::class, 'verProductoInLote']);
 Route::get('productosInLote', [webController::class, 'guardarpaqueteInLote']);
