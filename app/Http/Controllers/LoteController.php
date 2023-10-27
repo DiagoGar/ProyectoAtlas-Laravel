@@ -93,10 +93,26 @@ class LoteController extends Controller
         return redirect('/productosInLote/'.$lrpa->idLotes);
     }
 
-    public function loteInAlmacen(Request $request)
+    public function verLoteInNodo(Request $request)
     {
-        $lotemovimiento = new LotesMovimiento();
-        $lotemovimiento = LotesMovimiento::findOrFail($request->idLote);
+        $query = Lote::select('*')
+        ->join('lotes_movimientos', 'lotes.idLotes', '=', 'lotes_movimientos.idLotes')
+        ->join('movimientos', 'lotes_movimientos.idMovimientos', '=', 'movimientos.idMovimientos')
+        ->join('nodos', 'movimientos.idNodos', '=', 'nodos.idNodos')
+        ->get();
+
+        return $query;
+    }
+
+    public function GuardarLoteInNodo(Request $request)
+    {
+        $movimeinto = Movimiento::find($request->idMovimiento);
+        $movimeinto->idNodos = $request->idNodo;
+
+        $movimeinto->save();
+
+        return $movimeinto;
+        //return redirect
     }
     
     public function destroy(Request $request){

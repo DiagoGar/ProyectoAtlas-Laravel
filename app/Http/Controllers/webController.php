@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Lote;
+use App\Models\Movimiento;
+use App\Models\Nodo;
 use App\Models\Producto;
 use App\Models\RemitosProductosalmacen;
 use App\Models\Tipofuncionario;
@@ -48,6 +50,16 @@ class webController extends Controller
     ->get();
 
     return view('forms.guardarPaqueteInLote', ['lotes' => $lote, 'productoSinRemitos' => $productoSinLote]);
+  }
+
+  public function guardarLoteInNodo()
+  {
+    $nodo = Nodo::select('*')
+    ->get();
+    $movimineto = Movimiento::select('*')
+    ->get();
+
+    return view('forms.guardarLoteInNodo', ['nodos' => $nodo, 'movimientos' => $movimineto]);
   }
 
   // --------/-\/-\/-\--------Products Section--------/-\/-\/-\-------- //
