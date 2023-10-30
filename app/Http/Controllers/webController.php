@@ -9,6 +9,7 @@ use App\Models\Producto;
 use App\Models\RemitosProductosalmacen;
 use App\Models\Tipofuncionario;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 
 class webController extends Controller
@@ -85,4 +86,32 @@ class webController extends Controller
     // $data = json_decode($response->getContent(), true);
     // return view('forms.updateProducts', ['data' => $data]);
   }
+
+  // --------/-\/-\/-\--------Map Section--------/-\/-\/-\-------- //
+
+  public function verMapa(Request $request){
+    if ($request->origin && isset($request->origin)) {
+      $origin = $request->origin;
+      $destination = $request->destination;
+      $destinationConvert = strtr($destination, " ", "+");
+      $originConvert = strtr($origin, " ", "+");
+      $url = 'https://maps.googleapis.com/maps/api/directions/json?origin=' .$originConvert . '&destination=' . $destinationConvert . '&language=es&key=AIzaSyD3zJVr4jqU-cOuELY32KrBvkTXSiK2mU0';
+    }else{
+      $destination = $request->destination;
+      $destinationConvert = strtr($destination, " ", "+");
+      $url = 'https://maps.googleapis.com/maps/api/directions/json?origin=republica+dominicana+3026+Montevideo&destination=' . $destinationConvert . '&language=es&key=AIzaSyD3zJVr4jqU-cOuELY32KrBvkTXSiK2mU0';
+    }
+    
+    $response = Http::get($url);
+    
+    $data =  $response->json();
+
+    foreach ($data['routes'][0]['legs'][0]['steps'] as $step) {
+      $htmlInstructions = $step['html_instructions'];
+      $instruction[] = $htmlInstructions;
+    }
+
+    return view('map.viewSteps', ['data' => $instruction]);
+  }
+
 }

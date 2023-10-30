@@ -17,12 +17,18 @@
     </head>
     <body class="antialiased" style="padding: 20px 40px;">
         <h2 style="font-size: 32px;">Welcome page</h2>
-        @foreach($data as $item)
+        {{-- @foreach($data as $item)
         <div style="margin-bottom: 20px;">
             <p>ID: {{ $item['idLotes'] }}</p>
             <p>Cantidad: {{ $item['cantidad'] }}</p>
         </div>
-        @endforeach
+        @endforeach --}}
+        <div class="data">
+            {{-- {{$data}} --}}
+            @foreach ($data as $item)
+                <?php echo $item?>
+            @endforeach
+        </div>
         {{-- <div class="relative sm:flex sm:justify-center sm:items-center min-h-screen bg-dots-darker bg-center bg-gray-100 dark:bg-dots-lighter dark:bg-gray-900 selection:bg-red-500 selection:text-white">
             @if (Route::has('login'))
                 <div class="sm:fixed sm:top-0 sm:right-0 p-6 text-right z-10">

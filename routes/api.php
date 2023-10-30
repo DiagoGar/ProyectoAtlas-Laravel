@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AlmacenController;
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\CamioneroController;
 use App\Http\Controllers\LoteController;
 use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\TransitoController;
@@ -41,3 +42,5 @@ Route::post("/loteInNodo", [LoteController::class, 'GuardarLoteInNodo']);
 Route::get('/transito', [TransitoController::class, 'index']);
 Route::get('/transito/{id}', [TransitoController::class, 'seguimiento']);
 Route::post('/transito/{id}', [TransitoController::class, 'seguimiento']);
+
+Route::get('/map', [CamioneroController::class, 'verMapa']);
