@@ -4,9 +4,9 @@
  * Created by Reliese Model.
  */
 
-namespace App\Models;
+// namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+// use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class HojaderutaMovimieto
@@ -19,37 +19,37 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @package App\Models
  */
-class HojaderutaMovimieto extends Model
-{
-	protected $table = 'hojaderuta_movimietos';
-	protected $primaryKey = 'idMovimientos';
-	public $incrementing = false;
-	public $timestamps = false;
+// class HojaderutaMovimieto extends Model
+// {
+// 	protected $table = 'hojaderuta_movimietos';
+// 	protected $primaryKey = 'idMovimientos';
+// 	public $incrementing = false;
+// 	public $timestamps = false;
 
-	protected $casts = [
-		'idMovimientos' => 'int',
-		'idHojaDeRuta' => 'int'
-	];
+// 	protected $casts = [
+// 		'idMovimientos' => 'int',
+// 		'idHojaDeRuta' => 'int'
+// 	];
 
-	protected $fillable = [
-		'idHojaDeRuta'
-	];
+// 	protected $fillable = [
+// 		'idHojaDeRuta'
+// 	];
 
-	public function hojaderutum()
-	{
-		return $this->belongsTo(Hojaderutum::class, 'idHojaDeRuta');
-	}
+// 	public function hojaderutum()
+// 	{
+// 		return $this->belongsTo(Hojaderutum::class, 'idHojaDeRuta');
+// 	}
 
-	public function movimiento()
-	{
-		return $this->belongsTo(Movimiento::class, 'idMovimientos');
-	}
+// 	public function movimiento()
+// 	{
+// 		return $this->belongsTo(Movimiento::class, 'idMovimientos');
+// 	}
 
-	public function jsonSerialize(): mixed
-	{
-		return [
-			'idMovimientos' => $this->movimiento(),
-			'idHojaDeRuta' => $this->hojaderutum()
-		];
-	}
-}
+// 	public function jsonSerialize(): mixed
+// 	{
+// 		return [
+// 			'idMovimientos' => $this->movimiento(),
+// 			'idHojaDeRuta' => $this->hojaderutum()
+// 		];
+// 	}
+// }
