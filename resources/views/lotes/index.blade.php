@@ -41,7 +41,8 @@
 </div>
 
 <div class="text-center my-5">
-  <Button class="my-3 bg-orange-400 py-3 px-5 rounded-xl"><a href="crearLote">Crear Lote</a></Button>
+  <Button class="my-3 bg-orange-400 py-3 px-5 rounded-xl"><a href="/crearLote">Crear Lote</a></Button>
+  <Button class="my-3 bg-orange-400 py-3 px-5 rounded-xl"><a href="/loteInCoche">Ver Lotes en camion</a></Button>
 </div>
 
 @endsection

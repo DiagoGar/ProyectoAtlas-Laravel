@@ -63,6 +63,15 @@ class webController extends Controller
     return view('forms.guardarLoteInNodo', ['nodos' => $nodo, 'movimientos' => $movimineto]);
   }
 
+  public function verLoteInCoche(Request $request)
+  {
+    $patente = $request->patente;
+    $request = Request::create('api/loteInCoche/'.$patente, 'GET');
+    $response = Route::dispatch($request);
+    $data = json_decode($response->getContent(), true);
+    return view('welcome', ['data' => $data]);
+  }
+
   // --------/-\/-\/-\--------Products Section--------/-\/-\/-\-------- //
 
   public function indexProductos()
@@ -90,7 +99,7 @@ class webController extends Controller
   // --------/-\/-\/-\--------Map Section--------/-\/-\/-\-------- //
 
   public function verMapa(Request $request){
-    if ($request->origin && isset($request->origin)) {
+    if ($request->origin || isset($request->origin)) {
       $origin = $request->origin;
       $destination = $request->destination;
       $destinationConvert = strtr($destination, " ", "+");
@@ -108,10 +117,21 @@ class webController extends Controller
 
     foreach ($data['routes'][0]['legs'][0]['steps'] as $step) {
       $htmlInstructions = $step['html_instructions'];
+      $distance[] = $step['distance']['text'];
       $instruction[] = $htmlInstructions;
+      $start_location[] = $step['start_location'];
+      $end_location[] = $step['end_location'];
     }
 
-    return view('map.viewSteps', ['data' => $instruction]);
+
+    $data = [
+      'instruction' => $instruction,
+      'distance' => $distance,
+      'start_location' => $start_location,
+      'end_location' => $end_location,
+    ];
+
+    return view('map.viewSteps', ['data' => $data]);
   }
 
 }

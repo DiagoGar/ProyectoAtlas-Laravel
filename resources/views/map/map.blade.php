@@ -3,7 +3,7 @@
 @section('title', 'Mapa')
 
 @section('form')
-<form action="viewMap" method="GET" class="mt-64">
+<form action="/viewMap" method="GET" class="mt-64">
   @csrf
   <div class="max-w-2xl mx-auto p-6 rounded-md shadow-lg flex justify-between bg-orange-500">
     <div class="w-1/2 mr-4">

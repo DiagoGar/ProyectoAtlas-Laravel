@@ -28,6 +28,7 @@ Route::get('/', function () {
 
 Route::get('/lotes', [webController::class, 'indexLotes']);
 Route::get('/crearLote', [webController::class, 'storeLote']);
+Route::get('/loteInCoche/{patente?}', [webController::class, 'verLoteInCoche']);
 
 Route::get('productosInLote/{id}', [webController::class, 'verProductoInLote']);
 Route::get('productosInLote', [webController::class, 'guardarpaqueteInLote']);
@@ -40,23 +41,10 @@ Route::get('/edita-producto/{id}', [webController::class, 'updateProduct']);
 Route::get('/loteInNodo', [webController::class, 'guardarLoteInNodo']);
 
 Route::view('/mapData', 'map.map');
-Route::get('viewMap', [webController::class, 'verMapa']);
+Route::get('/viewMap', [webController::class, 'verMapa']);
 
 Route::get('/login', function(){
     return view('login');
 })->name('login');
 
-
-// Route::get('/maps', function(){
-
-//     $url = "https://maps.googleapis.com/maps/api/directions/json?origin=republica+dominicana+3026+Montevideo&destination=Luis+Alberto+de+Herrera+y+Avenida+italia+Montevideo&key=AIzaSyD3zJVr4jqU-cOuELY32KrBvkTXSiK2mU0";
-    
-//     $response = Http::get($url);
-
-//     // $data = json_encode($response, true);
-//     $data =  $response->json();
-
-//     // Procesa y muestra los datos
-//     return view('welcome', ['data' => json_encode($data)]);
-// });
 
