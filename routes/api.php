@@ -39,6 +39,9 @@ Route::post('/lotes/{id}', [LoteController::class, 'update']);
 Route::get("/loteInNodo", [LoteController::class, 'verLoteInNodo']);
 Route::post("/loteInNodo", [LoteController::class, 'GuardarLoteInNodo']);
 
+Route::get('/loteInCoche/{patente?}', [LoteController::class, 'verLoteInCoche']);
+Route::post('/loteInCoche', [LoteController::class, 'insertLoteInCoche']);
+
 Route::get('/transito', [TransitoController::class, 'index']);
 Route::get('/transito/{id}', [TransitoController::class, 'seguimiento']);
 Route::post('/transito/{id}', [TransitoController::class, 'seguimiento']);

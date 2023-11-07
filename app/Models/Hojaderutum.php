@@ -25,7 +25,7 @@ class Hojaderutum extends Model
 {
 	protected $table = 'hojaderuta';
 	protected $primaryKey = 'idHojaDeRuta';
-	public $incrementing = false;
+	public $incrementing = true;
 	public $timestamps = false;
 
 	protected $casts = [
