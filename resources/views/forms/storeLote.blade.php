@@ -20,6 +20,8 @@
         </div>
         <label for="nombre" class="block mb-1 text-black-800">Cantidad de productos</label>
         <input type="number" name="cantidadProductos" class="block py-2 pl-3 pr-10 mt-1 text-black border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+        <label for="fechaLLegada" name="fechaLlegada" class="block mb-1 text-black-800">Hora de llegada</label>
+        <input type="date" name="fechaLlegada" class="block py-2 pl-3 pr-10 mt-1 text-black border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
       </div>
       <div class="boton text-center mt-5">
         <button
