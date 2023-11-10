@@ -35,25 +35,34 @@ class LoteController extends Controller
     public function store(Request $request)
     {   
         $lote = new Lote();
-
-        $lote->cedulaFuncionario = $request->cedulaFuncionario;
-        $lote->cantidadProductos = $request->cantidadProductos;
-
-        $lote->save();
-
         $movimeinto = new Movimiento();
-        $movimeinto->estado = "Despachado";
-        $movimeinto->fechaLlegada = "2023-09-23";
-
-        $movimeinto->save();
-
         $lotemovimiento = new LotesMovimiento();
-        $lotemovimiento->idMovimientos = $movimeinto->idMovimientos;
-        $lotemovimiento->idLotes = $lote->idLotes;
+        
+        try{
+            DB::beginTransaction();
 
-        $lotemovimiento->save();
+            $lote->cedulaFuncionario = $request->cedulaFuncionario;
+            $lote->cantidadProductos = $request->cantidadProductos;
 
-        return redirect('/lotes');
+            $lote->save();
+
+            $movimeinto->estado = "Despachado";
+            $movimeinto->fechaLlegada = $request->fechaLlegada;
+
+            $movimeinto->save();
+
+            $lotemovimiento->idMovimientos = $movimeinto->idMovimientos;
+            $lotemovimiento->idLotes = $lote->idLotes;
+
+            $lotemovimiento->save();
+
+            DB::commit();
+            return redirect('/lotes');
+        }catch(\Exception $e){
+            DB::rollBack();
+            return json_encode($e);
+        }
+        
     }
 
     public function update(Request $request)
@@ -70,9 +79,9 @@ class LoteController extends Controller
 
     public function VerPaqueteInLote(Request $req)
     {
-        $rpa = new RemitosProductosalmacen();
-        $lrpa = new LoteRemitosproductosalmacen();
-        $lotes = new Lote();
+        // $rpa = new RemitosProductosalmacen();
+        // $lrpa = new LoteRemitosproductosalmacen();
+        // $lotes = new Lote();
 
         $query = Producto::join('remitos_productosalmacen', 'productos.idProductos', '=', 'remitos_productosalmacen.idProductos')
         ->join('lote_remitosproductosalmacen', 'remitos_productosalmacen.idRemitos', '=', 'lote_remitosproductosalmacen.idRemitos')
@@ -85,16 +94,24 @@ class LoteController extends Controller
 
     public function GuardarPaqueteInLote(Request $req)
     {
-        $idRemitos = $req->input('idRemitos');
-        foreach($idRemitos as $idRemito){            
-            $lrpa = new LoteRemitosproductosalmacen();
-            $lrpa->idLotes = $req->idLotes;
-            $lrpa->idRemitos = $idRemito;
+        try{
+            DB::beginTransaction();
+            $idRemitos = $req->input('idRemitos');
+            foreach($idRemitos as $idRemito){            
+                $lrpa = new LoteRemitosproductosalmacen();
+                $lrpa->idLotes = $req->idLotes;
+                $lrpa->idRemitos = $idRemito;
+        
+                $lrpa->save();
+            };
     
-            $lrpa->save();
-        };
-
-        return redirect('/productosInLote/'.$lrpa->idLotes);
+            DB::commit();
+            return redirect('/productosInLote/'.$lrpa->idLotes);
+            
+        }catch(\Exception $e){
+            DB::rollBack();
+            return json_encode($e);
+        }
     }
 
     public function verLoteInNodo(Request $request)
@@ -131,8 +148,6 @@ class LoteController extends Controller
             ->join('lotes', 'lotes_movimientos.idLotes', '=', 'lotes.idLotes')
             ->get();
         
-        
-        
             return $loteInCoche;
         }else{
             $coche = Coch::findOrFail($request->patente);
@@ -164,8 +179,8 @@ class LoteController extends Controller
             $hdr->idRutas = $request->hdridRutas;
             $hdr->save();
 
-            $movimiento->idRutas = $request->midRutas;
-            $movimiento->idHojaDeRuta = $request->midHojaDeRuta; // el idHojaDeRuta tiene que existir en HojaDeRuta y tiene que tener la misma ruta que HojaDeRutas->idRutas
+            $movimiento->idRutas = $request->hdridRutas; // tiene que ser el mismo idRtuas que el ingresado en hdr
+            $movimiento->idHojaDeRuta = Hojaderutum::all()->last()->idHojaDeRuta; // el idHojaDeRuta tiene que existir en HojaDeRuta y tiene que tener la misma ruta que HojaDeRutas->idRutas
             $movimiento->estado = "En camino";
             $movimiento->fechaEstimada = $request->fechaEstimada;
             $movimiento->fechaLlegada = $request->fechaLlegada;
@@ -182,7 +197,7 @@ class LoteController extends Controller
             $hdrcc->save();
 
             DB::commit();
-            return [$hdr, $movimiento, $lotesMovimiento, $hdrcc];
+            return redirect('/loteInCoche/' . $request->patente);
 
 
         } catch(\Exception $e) {

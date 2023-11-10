@@ -49,13 +49,13 @@ class LotesMovimiento extends Model
 		return $this->belongsTo(Movimiento::class, 'idMovimientos');
 	}
 
-	public function jsonSerialize(): mixed
-	{
-		return [
-			'idLote' => $this->lote(),
-			'idMovimientos' => $this->movimiento(),
-			'estado' => $this->estado,
-			'fechaLlegada' => $this->fechaLlegada
-		];
-	}
+	// public function jsonSerialize(): mixed
+	// {
+	// 	return [
+	// 		'idLote' => $this->lote(),
+	// 		'idMovimientos' => $this->movimiento(),
+	// 		'estado' => $this->estado,
+	// 		'fechaLlegada' => $this->fechaLlegada
+	// 	];
+	// }
 }
