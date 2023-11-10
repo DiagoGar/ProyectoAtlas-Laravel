@@ -2,13 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CamionerosCoch;
+use App\Models\HojaderutaCamioneroscoch;
+use App\Models\Hojaderutum;
 use App\Models\Lote;
+use App\Models\LotesMovimiento;
 use App\Models\Movimiento;
 use App\Models\Nodo;
+use App\Models\Nododireccion;
 use App\Models\Producto;
 use App\Models\RemitosProductosalmacen;
+use App\Models\Ruta;
 use App\Models\Tipofuncionario;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 
@@ -69,7 +76,31 @@ class webController extends Controller
     $request = Request::create('api/loteInCoche/'.$patente, 'GET');
     $response = Route::dispatch($request);
     $data = json_decode($response->getContent(), true);
-    return view('welcome', ['data' => $data]);
+    return view('lotes.loteInCoche', ['data' => $data]);
+  }
+
+  public function insertLoteInCoche(Request $request)
+  {
+    $rutas = Ruta::all();
+    $midRutas =  DB::table('movimientos')
+    ->join('hojaderuta', 'hojaderuta.idRutas', '=', 'movimientos.idRutas')
+    ->select('movimientos.idRutas')
+    ->get();
+    $movimientos = Movimiento::all();
+    $lotes = Lote::all();
+    $cc = CamionerosCoch::all();
+
+    $data = [
+      'rutas' => $rutas,
+      'midRutas' => $midRutas,
+      'movimientos' => $movimientos,
+      'lotes' => $lotes,
+      'cc' => $cc
+    ];
+
+    // return $hdrcc;
+    return view('forms.insertLoteInCoche', ['data' => $data]);
+
   }
 
   // --------/-\/-\/-\--------Products Section--------/-\/-\/-\-------- //
@@ -97,6 +128,11 @@ class webController extends Controller
   }
 
   // --------/-\/-\/-\--------Map Section--------/-\/-\/-\-------- //
+
+  public function mapData(){
+    $nodoDireccion = Nododireccion::all();
+    return view('map.map', ['data' => $nodoDireccion]);
+  }
 
   public function verMapa(Request $request){
     if ($request->origin || isset($request->origin)) {

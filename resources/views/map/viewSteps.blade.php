@@ -14,6 +14,9 @@
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCeB7DxtVmKQoDc4fHAfZTnjv_bEt1ZeGs&libraries=places"></script>
   
     <div id="map" class="my-32 h-96 w-11/12"></div>
+
+    <button class="mt-9 mb-16 w-4/12 h-8">Bajar Lote</button>
+
   </div>
 
 <script>

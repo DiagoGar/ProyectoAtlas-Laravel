@@ -10,6 +10,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\Authenticate;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\EnviosMailable;
+use App\Models\Nododireccion;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,6 +32,7 @@ Route::get('/', function () {
 Route::get('/lotes', [webController::class, 'indexLotes']);
 Route::get('/crearLote', [webController::class, 'storeLote']);
 Route::get('/loteInCoche/{patente?}', [webController::class, 'verLoteInCoche']);
+Route::get('/insertLoteInCoche', [webController::class, 'insertLoteInCoche']);
 
 Route::get('productosInLote/{id}', [webController::class, 'verProductoInLote']);
 Route::get('productosInLote', [webController::class, 'guardarpaqueteInLote']);
@@ -40,11 +44,17 @@ Route::get('/edita-producto/{id}', [webController::class, 'updateProduct']);
 
 Route::get('/loteInNodo', [webController::class, 'guardarLoteInNodo']);
 
-Route::view('/mapData', 'map.map');
+Route::get('/mapData', [webController::class, 'mapData']);
 Route::get('/viewMap', [webController::class, 'verMapa']);
 
 Route::get('/login', function(){
     return view('login');
 })->name('login');
+
+// Route::get('/email', function(){
+//     Mail::to('nicolasolivera003@gmail.com')
+//     ->send(new EnviosMailable);
+//     return "Mensaje Enviado";
+// })->name("email");
 
 
