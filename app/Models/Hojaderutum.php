@@ -52,11 +52,11 @@ class Hojaderutum extends Model
 		return $this->hasMany(HojaderutaMovimieto::class, 'idHojaDeRuta');
 	}
 
-	public function jsonSerialize(): mixed
-	{
-		return [
-			'idHojaDeRuta' => $this->idHojaDeRuta,
-			'idRuta' => $this->ruta(),
-		];
-	}
+	// public function jsonSerialize(): mixed
+	// {
+	// 	return [
+	// 		'idHojaDeRuta' => $this->idHojaDeRuta,
+	// 		'idRuta' => $this->ruta(),
+	// 	];
+	// }
 }
