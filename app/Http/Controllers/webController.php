@@ -32,7 +32,8 @@ class webController extends Controller
 
   public function storeLote(){
     $cedulafuncionario = Tipofuncionario::select('cedulaFuncionario')->get();
-    return view('forms.storeLote', ['funcionario' => $cedulafuncionario]);
+    $nodos = Nodo::select('*')->get();
+    return view('forms.storeLote', ['funcionarios' => $cedulafuncionario , 'nodos' => $nodos]);
   }
 
   public function verProductoInLote(Request $request){
