@@ -48,6 +48,7 @@ class LoteController extends Controller
 
             $movimeinto->estado = "Despachado";
             $movimeinto->fechaLlegada = $request->fechaLlegada;
+            $movimeinto->idNodos = $request->idNodo;
 
             $movimeinto->save();
 
@@ -146,6 +147,7 @@ class LoteController extends Controller
             ->join('movimientos', 'hojaderuta.idHojaDeRuta', '=', 'movimientos.idHojaDeRuta')
             ->join('lotes_movimientos', 'movimientos.idMovimientos', '=', 'lotes_movimientos.idMovimientos')
             ->join('lotes', 'lotes_movimientos.idLotes', '=', 'lotes.idLotes')
+            ->distinct()
             ->get();
         
             return $loteInCoche;
@@ -159,6 +161,7 @@ class LoteController extends Controller
             ->join('lotes_movimientos', 'movimientos.idMovimientos', '=', 'lotes_movimientos.idMovimientos')
             ->join('lotes', 'lotes_movimientos.idLotes', '=', 'lotes.idLotes')
             ->where('coches.patente', $coche->patente)
+            ->distinct()
             ->get();
         
             return $loteInCoche;
@@ -173,11 +176,22 @@ class LoteController extends Controller
         $lotesMovimiento = new LotesMovimiento();
         $hdrcc = new HojaderutaCamioneroscoch();
 
+        // $idhdr[0]->idHojaDeRuta = Hojaderutum::all()->last()->idHojaDeRuta; 
+
         try{
             DB::beginTransaction();
 
             $hdr->idRutas = $request->hdridRutas;
-            $hdr->save();
+            $hdr->save(); 
+
+            $idhdr = Movimiento::join('lotes_movimientos', 'movimientos.idMovimientos', '=', 'lotes_movimientos.idMovimientos')
+            ->join('lotes', 'lotes_movimientos.idLotes', '=', 'lotes.idLotes')
+            ->where('lotes.idLotes', '=', $request->idLotes)
+            ->select('movimientos.*')
+            ->get(); 
+            $ultimoIdHojaDeRuta = json_encode(Hojaderutum::all()->last()->idHojaDeRuta);
+            Movimiento::where('idHojaDeRuta', $idhdr[0]->idHojaDeRuta)
+            ->update(['idHojaDeRuta' => $ultimoIdHojaDeRuta]);
 
             $movimiento->idRutas = $request->hdridRutas; // tiene que ser el mismo idRtuas que el ingresado en hdr
             $movimiento->idHojaDeRuta = Hojaderutum::all()->last()->idHojaDeRuta; // el idHojaDeRuta tiene que existir en HojaDeRuta y tiene que tener la misma ruta que HojaDeRutas->idRutas
@@ -197,7 +211,7 @@ class LoteController extends Controller
             $hdrcc->save();
 
             DB::commit();
-            return redirect('/loteInCoche/' . $request->patente);
+            return redirect('loteInCoche/' . $request->patente);
 
 
         } catch(\Exception $e) {
