@@ -33,23 +33,24 @@
 
           <div class="max-w-md mx-auto bg-white rounded-md p-6 shadow-md w-96">
             <div class="flex flex-col items-start">
-              @foreach ($productoSinRemitos as $productoRemito)    
+              @foreach ($productoSinLote as $productoSinLote)    
                 <div class="flex justify-center items-center">
-                  <input type="checkbox" name="idRemitos[]" class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded mr-6" value="{{$productoRemito->idRemitos}}">
-                  <label for="example-checkbox" class="ml-2 text-sm text-gray-600">id: {{$productoRemito->idRemitos}} Nombre: {{$productoRemito->nombreProducto}}</label>
+                  <input type="checkbox" name="idRemitos[]" class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded mr-6" value="{{$productoSinLote->idRemitos}}">
+                  <label for="example-checkbox" class="ml-2 text-sm text-gray-600">id: {{$productoSinLote->idRemitos}} Nombre: {{$productoSinLote->nombreProducto}} destino: {{$productoSinLote->destino}}</label>
                 </div>
               @endforeach
             </div>
           </div>
 
         </div>
-        <div class="boton text-center mt-5">
+        <div class="boton text-center mt-5 w-fit flex justify-around">
           <button
             type="submit"
-            class="mt-12 max-w-max bg-blue-500 text-white px-6 py-3 rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-700"
+            class="mt-12 mr-5 max-w-max bg-blue-500 text-white px-6 py-3 rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-700"
           >
             Enviar
           </button>
+          <a href="/agregarProducto" class="mt-12 ml-5 max-w-max bg-blue-500 text-white px-6 py-3 rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-700">Crear producto</a>
         </div>
       </div>
 </form>

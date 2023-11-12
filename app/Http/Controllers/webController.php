@@ -47,8 +47,9 @@ class webController extends Controller
   {
     $lote = Lote::all();
     $producto = Producto::all();
-    $productoSinLote = Remitosproductosalmacen::select('remitos_productosalmacen.idRemitos', 'remitos_productosalmacen.idProductos', 'productos.nombreProducto')
-    ->join('productos_almacen', 'remitos_productosalmacen.idRemitos', '=', 'productos_almacen.idProductos')
+    $productoSinLote = Remitosproductosalmacen::select('remitos_productosalmacen.idRemitos', 'remitos_productosalmacen.idProductos', 'productos.nombreProducto', 'remitos.destino')
+    ->join('remitos', 'remitos.idRemitos', '=', 'remitos_productosalmacen.idRemitos')
+    ->join('productos_almacen', 'remitos_productosalmacen.idProductos', '=', 'productos_almacen.idProductos')
     ->join('productos', 'productos_almacen.idProductos', '=', 'productos.idProductos')
     ->whereNotIn('remitos_productosalmacen.idRemitos', function ($query) {
         $query->select('idRemitos')
@@ -57,7 +58,7 @@ class webController extends Controller
     })
     ->get();
 
-    return view('forms.guardarPaqueteInLote', ['lotes' => $lote, 'productoSinRemitos' => $productoSinLote]);
+    return view('forms.guardarPaqueteInLote', ['lotes' => $lote, 'productoSinLote' => $productoSinLote]);
   }
 
   public function guardarLoteInNodo()
