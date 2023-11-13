@@ -89,7 +89,14 @@ class webController extends Controller
     ->select('movimientos.idRutas')
     ->get();
     $movimientos = Movimiento::all();
-    $lotes = Lote::all();
+    $lotes = Lote::join('lotes_movimientos', 'lotes.idLotes', '=', 'lotes_movimientos.idLotes')
+    ->join('movimientos', 'lotes_movimientos.idMovimientos', '=', 'movimientos.idMovimientos')
+    ->whereNull('movimientos.idHojaDeRuta')
+    ->orWhere('movimientos.idHojaDeRuta', '=', '')
+    ->select('lotes.*')
+    ->distinct()
+    ->get();
+
     $cc = CamionerosCoch::all();
 
     $data = [

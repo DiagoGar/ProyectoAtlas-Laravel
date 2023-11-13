@@ -13,16 +13,6 @@
       <div class="mb-4">
 
         <div class="max-w-md mx-auto bg-white rounded-md p-6 shadow-md w-96">
-          <div class="flex flex-col items-start">
-            <div class="flex justify-center items-center">
-              <label for="hdridRutas" class="block mb-1 mx-1 text-gray-800">id Rutas</label>
-              <select name="hdridRutas" class="h-4 w-4 text-black border-gray-300 rounded mr-6">
-                @foreach ($data['rutas'] as $item)    
-                  <option value="{{$item->idRutas}}">id: {{$item->idRutas}} Ruta: {{$item->nombreRuta}}</option>
-                @endforeach
-                </select>
-              </div>
-          </div>
 
           {{-- <div class="flex flex-col items-start mt-9">
             <div class="flex justify-center items-center">
