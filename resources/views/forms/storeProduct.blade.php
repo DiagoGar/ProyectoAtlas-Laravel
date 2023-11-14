@@ -61,11 +61,11 @@
             >Destinatario</label
           >
           <input
-            type="text"
+            type="email"
             id="destinatario"
             name="destinatario"
             class="w-full border text-slate-900 border-gray-300 px-3 py-2 rounded-md"
-            placeholder="Ingrese el destinatario"
+            placeholder="Email del destinatario"
           />
         </div>
         <div class="mb-4">

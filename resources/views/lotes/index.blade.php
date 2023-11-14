@@ -13,7 +13,7 @@
                   Encargado del lote
               </th>
               <th scope="col" class="px-6 py-3">
-                  Id Lote
+                  Id del lote
             </th>
               <th scope="col" class="px-6 py-3">
                   Cantidad de productos
@@ -40,9 +40,13 @@
     </table>
 </div>
 
-<div class="text-center my-5">
-  <Button class="my-3 bg-orange-400 py-3 px-5 rounded-xl"><a href="/crearLote">Crear Lote</a></Button>
-  <Button class="my-3 bg-orange-400 py-3 px-5 rounded-xl"><a href="/loteInCoche">Ver Lotes en camion</a></Button>
+<div class="grid grid-cols-4 gap-3 justify-center mt-5">
+  <div class="col-span-1"></div>
+  <Button class="my-3 col-span-1 bg-orange-400 py-3 px-5 rounded-xl"><a href="/crearLote">Crear Lote</a></Button>
+  <Button class="my-3 col-span-1 bg-orange-400 py-3 px-5 rounded-xl"><a href="/loteInCoche">Ver Lotes en camion</a></Button>
+  <div class="col-span-1"></div>
 </div>
-
+<div class="flex justify-center mt-8">
+  <Button class="bg-orange-400 py-3 px-5 rounded-xl"><a href="/insertLoteInCoche">Insertar lote en camion</a></Button>
+</div>
 @endsection
