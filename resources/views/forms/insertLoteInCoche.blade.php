@@ -44,13 +44,6 @@
                 <input type="date" name="fechaEstimada" class="text-black">
               </div>
             </div>
-            
-            <div class="flex flex-col items-start mt-9">
-              <div class="flex justify-center items-center">
-              <label for="fechaLlegada" class="block mb-1 mx-1 text-gray-800 mr-2">fecha llegada</label>
-                <input type="date" name="fechaLlegada" class="text-black">
-              </div>
-          </div>
 
             <div class="flex flex-col items-start">
               <div class="relative">

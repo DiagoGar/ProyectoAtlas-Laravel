@@ -42,7 +42,7 @@ Route::view('/agregarProducto', 'forms.storeProduct')->name('storeProduct');
 // Route::view('editarProdcuto', 'forms.updateProduct')->name('updateProduct');
 Route::get('/edita-producto/{id}', [webController::class, 'updateProduct']);
 
-Route::get('/loteInNodo', [webController::class, 'guardarLoteInNodo']);
+// Route::get('/loteInNodo', [webController::class, 'guardarLoteInNodo']);
 
 Route::get('/mapData', [webController::class, 'mapData']);
 Route::get('/viewMap', [webController::class, 'verMapa']);
@@ -51,10 +51,8 @@ Route::get('/login', function(){
     return view('login');
 })->name('login');
 
-// Route::get('/email', function(){
-//     Mail::to('nicolasolivera003@gmail.com')
-//     ->send(new EnviosMailable);
-//     return "Mensaje Enviado";
-// })->name("email");
+Route::get('/email', function(){
+    return (new EnviosMailable("Entregado"))->render();
+})->name("email");
 
 
