@@ -38,7 +38,6 @@ class Movimiento extends Model
 		'idMovimientos' => 'int',
 		'idNodos' => 'int',
 		'idRutas' => 'int',
-		'idHojaDeRuta' => 'int',
 		'fechaEstimada' => 'datetime',
 		'fechaLlegada' => 'datetime'
 	];
@@ -46,7 +45,6 @@ class Movimiento extends Model
 	protected $fillable = [
 		'idNodos',
 		'idRutas',
-		'idHojaDeRuta',
 		'estado',
 		'fechaEstimada',
 		'fechaLlegada'
@@ -62,9 +60,9 @@ class Movimiento extends Model
 		return $this->belongsTo(Nodo::class, 'idNodos');
 	}
 
-	public function hojaderuta()
+	public function hojaderuta_movimieto()
 	{
-		return $this->belongsTo(Hojaderutum::class, 'idHojaDeRuta');
+		return $this->hasOne(HojaderutaMovimieto::class, 'idMovimientos');
 	}
 
 	public function lotes()
