@@ -8,6 +8,7 @@ use App\Models\ProductosAlmacen;
 use App\Models\Remito;
 use App\Models\RemitosProductosalmacen;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ProductoController extends Controller
 {
@@ -32,7 +33,10 @@ class ProductoController extends Controller
 
   public function store(Request $request)
   {
-    $producto = new Producto();
+    try{
+      DB::beginTransaction();
+
+      $producto = new Producto();
 
     $producto->nombreProducto = $request->nombre;
     $producto->pesoProducto = $request->peso;
@@ -60,7 +64,13 @@ class ProductoController extends Controller
 
     $rpa->save();
 
+    DB::commit();
     return redirect('/productos');
+
+    } catch (\Exception $e){
+      DB::rollBack();
+      return $e;
+    }
   }
 
   public function update(Request $request, $id)
