@@ -71,16 +71,4 @@ class Movimiento extends Model
 					->withPivot('estado', 'fechaLlegada');
 	}
 
-	// public function jsonSerialize(): mixed
-	// {
-	// 	return [
-	// 		'idMovimientos' => $this->idMovimientos,
-	// 		'idNodo' => $this->nodo(),
-	// 		'idRuta' => $this->ruta(),
-	// 		'estado' => $this->estado,
-	// 		'fechaLlegada' => $this->fechaLlegada,
-	// 		'fechaEstimada' => $this->fechaEstimada,
-	// 		'lotes' => $this->lotes()
-	// 	];
-	// }
 }

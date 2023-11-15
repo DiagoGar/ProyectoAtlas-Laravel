@@ -45,11 +45,4 @@ class Tipocamionero extends Model
 		return $this->hasMany(CamionerosCoch::class, 'cedulaCamionero');
 	}
 
-	public function jsonSerialize(): mixed
-	{
-		return [
-			'cedulaCamionero' => $this->usuario(),
-			'libreta' => $this->libreta,
-		];
-	}
 }

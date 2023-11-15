@@ -45,14 +45,4 @@ class Nododireccion extends Model
 		return $this->belongsTo(Nodo::class, 'idNodos');
 	}
 
-	public function jsonSerialize(): mixed
-	{
-		return [
-			'idNodos' => $this->idNodos,
-			'calle' => $this->calle,
-			'numeroPuerta' => $this->numeroPuerta,
-			'ciudad' => $this->ciudad,
-			'ruta' => $this->rutaAcceso
-		];
-	}
 }

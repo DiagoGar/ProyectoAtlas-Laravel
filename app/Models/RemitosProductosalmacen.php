@@ -54,11 +54,4 @@ class RemitosProductosalmacen extends Model
 		return $this->hasOne(LoteRemitosproductosalmacen::class, 'idRemitos');
 	}
 
-	// public function jsonSerialize(): mixed
-	// {
-	// 	return [
-	// 		'idRemitos' => $this->remito(),
-	// 		'idProductos' => $this->productos_almacen(),
-	// 	];
-	// }
 }

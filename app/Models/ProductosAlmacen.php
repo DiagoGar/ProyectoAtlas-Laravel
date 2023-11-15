@@ -52,11 +52,4 @@ class ProductosAlmacen extends Model
 		return $this->hasMany(RemitosProductosalmacen::class, 'idProductos');
 	}
 
-	public function jsonSerialize(): mixed
-	{
-		return [
-			'idProductos' => $this->producto(),
-			'idAlmacen' => $this->almacen()
-		];
-	}
 }

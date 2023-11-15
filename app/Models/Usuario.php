@@ -75,15 +75,4 @@ class Usuario extends Authenticatable implements JWTSubject
     return [];
   }
 
-	public function jsonSerialize(): mixed
-	{
-		return [
-			'cedulaUsuario' => $this->cedulaUsuario,
-			'tipoUsuario' => $this->tipoUsuario,
-			'nombreUsuario' => $this->nombreUsuario,
-			'mail' => $this->mail,
-			'password' => $this->password,
-			'telefono' => $this->telefono
-		];
-	}
 }

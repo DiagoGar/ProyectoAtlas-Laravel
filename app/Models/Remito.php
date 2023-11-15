@@ -51,16 +51,5 @@ class Remito extends Model
 	{
 		return $this->hasOne(RemitosProductosalmacen::class, 'idRemitos');
 	}
-
-	public function jsonSerialize(): mixed
-	{
-		return [
-			'idRemito' => $this->idRemitos,
-			'remitente' => $this->remitente,
-			'destinatario' => $this->destinatario,
-			'destino' => $this->destino,
-			'fechaEmision' => $this->fechaEmision,
-			'rut' => $this->rut
-		];
-	}
+	
 }

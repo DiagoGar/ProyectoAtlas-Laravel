@@ -41,6 +41,18 @@ class HojaderutaCamioneroscoch extends Model
 		'fechaArranque'
 	];
 
+	public static function __set_state($state)
+    {
+        $model = new self;
+
+        // Asignar las propiedades del estado al modelo
+        foreach ($state as $property => $value) {
+            $model->$property = $value;
+        }
+
+        return $model;
+    }
+
 	public function camioneros_coch()
 	{
 		return $this->belongsTo(CamionerosCoch::class, 'patente', 'patente');
@@ -50,14 +62,5 @@ class HojaderutaCamioneroscoch extends Model
 	{
 		return $this->belongsTo(Hojaderutum::class, 'idHojaDeRuta');
 	}
-
-	// public function jsonSerialize(): mixed
-	// {
-	// 	return [
-	// 		'idHojaDeRuta' => $this->hojaderutum(),
-	// 		'cedulaCamionero' => $this->cedulaCamionero,
-	// 		'fechaArranque' => $this->fechaArranque,
-	// 		'patente' => $this->camioneros_coch()
-	// 	];
-	// }
+	
 }

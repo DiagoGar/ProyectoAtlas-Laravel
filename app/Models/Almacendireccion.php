@@ -44,15 +44,4 @@ class Almacendireccion extends Model
 	{
 		return $this->belongsTo(Almacen::class, 'idAlmacen');
 	}
-
-	public function jsonSerialize(): mixed
-	{
-		return [
-			'idAlmacen' => $this->almacen(),
-			'numeroPuerta' => $this->numeroPuerta,
-			'calle' => $this->calle,
-			'ciudad' => $this->ciudad,
-			'rutaAcceso' => $this->rutaAcceso
-		];
-	}
 }
