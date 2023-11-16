@@ -58,14 +58,14 @@ class Lote extends Model
 					->withPivot('estado', 'fechaLlegada');
 	}
 
-	public function jsonSerialize(): mixed
-	{
-		return [
-			'idLotes' => $this->idLotes,
-			'cedulaFuncionario' => $this->tipofuncionario(),
-			'cantidad' => $this->cantidadProductos,
-			'lote_rpa' => $this->lote_remitosproductosalmacens(),
-			'movimientos' => $this->movimientos()
-		];
-	}
+	// public function jsonSerialize(): mixed
+	// {
+	// 	return [
+	// 		'idLotes' => $this->idLotes,
+	// 		'cedulaFuncionario' => $this->tipofuncionario(),
+	// 		'cantidad' => $this->cantidadProductos,
+	// 		'lote_rpa' => $this->lote_remitosproductosalmacens(),
+	// 		'movimientos' => $this->movimientos()
+	// 	];
+	// }
 }

@@ -5,7 +5,7 @@
 @endsection
 
 @section('form')
-<form method="POST" class="form_main">
+<form method="get" class="form_main">
   @csrf
   <p class="heading">Login</p>
   <div class="inputContainer">
