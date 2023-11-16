@@ -272,9 +272,20 @@ class LoteController extends Controller
 
             DB::beginTransaction();
 
+            $lastIdM2 = Movimiento::join('lotes_movimientos', 'movimientos.idMovimientos', '=', 'lotes_movimientos.idMovimientos')
+            ->where('lotes_movimientos.idLotes', $idLote)
+            ->where('movimientos.estado', 'Despachado')
+            ->pluck('movimientos.idMovimientos');
+
+            $mov2 = Movimiento::find($lastIdM2[0]);
+            $mov2->idNodos = $datos->idNodos;
+            $mov2->idRutas = $datos->idRutas;
+            $mov2->fechaLlegada = Carbon::today();
+            $mov2->save();
+
             $lastIdM = Movimiento::join('lotes_movimientos', 'movimientos.idMovimientos', '=', 'lotes_movimientos.idMovimientos')
-            ->where('lotes_movimientos.idLotes', 43)
-            ->where('movimientos.estado', 'en camino')
+            ->where('lotes_movimientos.idLotes', $idLote)
+            ->where('movimientos.estado', 'Despachado')
             ->pluck('movimientos.idMovimientos');
 
             $mov = Movimiento::find($lastIdM[0]);

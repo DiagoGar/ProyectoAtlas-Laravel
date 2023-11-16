@@ -14,7 +14,17 @@ class ProductoController extends Controller
 {
   public function index()
   {
-    $producto = Producto::all();
+    $producto = Producto::select('productos.*')
+    ->join('remitos_productosalmacen', 'productos.idProductos', '=', 'remitos_productosalmacen.idProductos')
+    ->join('lote_remitosproductosalmacen', 'remitos_productosalmacen.idRemitos', '=', 'lote_remitosproductosalmacen.idRemitos')
+    ->join('lotes_movimientos', 'lote_remitosproductosalmacen.idLotes', '=', 'lotes_movimientos.idLotes')
+    ->join('movimientos', 'lotes_movimientos.idMovimientos', '=', 'movimientos.idMovimientos')
+    ->where(function ($query) {
+        $query->where('movimientos.estado', 'en camino')
+            ->orWhere('movimientos.estado', 'despachado');
+    })
+    ->whereNull('movimientos.fechaLlegada')
+    ->get();
     return $producto;
   }
 
