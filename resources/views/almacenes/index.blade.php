@@ -1,4 +1,8 @@
-@extends('layouts.almacenes')
+@extends('layouts.actions')
+
+@section('title', 'Almacenes')
+
+@section('object', 'Almacenes')
 
 @section('table')
 <div class="relative overflow-x-auto">
@@ -34,8 +38,10 @@
             <td class="p-5">{{ $item['ciudad']}}</td>
             <td class="p-5">{{ $item['rutaAcceso']}}</td>
             <td>
-                <button><a>Eliminar</a></button>
+                {{-- <button><a href="http://localhost:8000/api/almacen/?id=" . $item['idNodos']>Eliminar</a></button> --}}
+                <button><a href="#">Eliminar</a></button>
                 <button><a>Editar</a></button>
+                <button><a href="#">Ver Lotes</a></button>
             </td>
           </tr>
           @endforeach

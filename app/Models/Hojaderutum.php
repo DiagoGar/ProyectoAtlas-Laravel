@@ -25,7 +25,7 @@ class Hojaderutum extends Model
 {
 	protected $table = 'hojaderuta';
 	protected $primaryKey = 'idHojaDeRuta';
-	public $incrementing = false;
+	public $incrementing = true;
 	public $timestamps = false;
 
 	protected $casts = [
@@ -51,4 +51,12 @@ class Hojaderutum extends Model
 	{
 		return $this->hasMany(HojaderutaMovimieto::class, 'idHojaDeRuta');
 	}
+
+	// public function jsonSerialize(): mixed
+	// {
+	// 	return [
+	// 		'idHojaDeRuta' => $this->idHojaDeRuta,
+	// 		'idRuta' => $this->ruta(),
+	// 	];
+	// }
 }

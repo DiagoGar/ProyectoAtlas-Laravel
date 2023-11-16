@@ -24,7 +24,7 @@ class Producto extends Model
 {
 	protected $table = 'productos';
 	protected $primaryKey = 'idProductos';
-	public $incrementing = false;
+	public $incrementing = true;
 	public $timestamps = false;
 
 	protected $casts = [
@@ -40,5 +40,15 @@ class Producto extends Model
 	public function almacens()
 	{
 		return $this->belongsToMany(Almacen::class, 'productos_almacen', 'idProductos', 'idAlmacen');
+	}
+
+	public function jsonSerialize(): mixed
+	{
+		return [
+			'idProductos' => $this->idProductos,
+			'nobreProducto' => $this->nombreProducto,
+			'pesoProducto' => $this->pesoProducto,
+			'almacenes' => $this->almacens()
+		];
 	}
 }

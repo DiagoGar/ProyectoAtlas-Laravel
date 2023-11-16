@@ -1,16 +1,8 @@
-@extends('layouts.almacenes')
+@extends('layouts.action')
 
-{{-- @section('nombre')
-    <h3>Nombre: <?php echo $nombreNodo;?></h3>
-@endsection
+@section('title', 'Almacenes')
 
-@section('rut')
-    <h3>Rut: <?php echo $rut;?></h3>
-@endsection
-
-@section('direccionAlmacen')
-    <h3>Direccion: <?php echo $direccionAlmacen;?></h3>
-@endsection --}}
+@section('object', 'Almacenes')
 
 @section('table')
 <div class="relative overflow-x-auto">

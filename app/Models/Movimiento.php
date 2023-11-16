@@ -31,13 +31,14 @@ class Movimiento extends Model
 {
 	protected $table = 'movimientos';
 	protected $primaryKey = 'idMovimientos';
-	public $incrementing = false;
+	public $incrementing = true;
 	public $timestamps = false;
 
 	protected $casts = [
 		'idMovimientos' => 'int',
 		'idNodos' => 'int',
 		'idRutas' => 'int',
+		'idHojaDeRuta' => 'int',
 		'fechaEstimada' => 'datetime',
 		'fechaLlegada' => 'datetime'
 	];
@@ -45,6 +46,7 @@ class Movimiento extends Model
 	protected $fillable = [
 		'idNodos',
 		'idRutas',
+		'idHojaDeRuta',
 		'estado',
 		'fechaEstimada',
 		'fechaLlegada'
@@ -60,9 +62,9 @@ class Movimiento extends Model
 		return $this->belongsTo(Nodo::class, 'idNodos');
 	}
 
-	public function hojaderuta_movimieto()
+	public function hojaderuta()
 	{
-		return $this->hasOne(HojaderutaMovimieto::class, 'idMovimientos');
+		return $this->belongsTo(Hojaderutum::class, 'idHojaDeRuta');
 	}
 
 	public function lotes()
@@ -70,4 +72,17 @@ class Movimiento extends Model
 		return $this->belongsToMany(Lote::class, 'lotes_movimientos', 'idMovimientos', 'idLotes')
 					->withPivot('estado', 'fechaLlegada');
 	}
+
+	// public function jsonSerialize(): mixed
+	// {
+	// 	return [
+	// 		'idMovimientos' => $this->idMovimientos,
+	// 		'idNodo' => $this->nodo(),
+	// 		'idRuta' => $this->ruta(),
+	// 		'estado' => $this->estado,
+	// 		'fechaLlegada' => $this->fechaLlegada,
+	// 		'fechaEstimada' => $this->fechaEstimada,
+	// 		'lotes' => $this->lotes()
+	// 	];
+	// }
 }

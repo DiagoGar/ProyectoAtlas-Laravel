@@ -45,4 +45,12 @@ class CamionerosCoch extends Model
 	{
 		return $this->hasMany(HojaderutaCamioneroscoch::class, 'patente', 'patente');
 	}
+
+	// public function jsonSerialize(): mixed
+	// {
+	// 	return [
+	// 		'cedulaCamionero' => $this->tipocamionero(),
+	// 		'hojaDeRutaCamioneroCoche' => $this->hojaderuta_camioneroscoches()
+	// 	];
+	// }
 }

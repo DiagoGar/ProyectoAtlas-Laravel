@@ -21,7 +21,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class HojaderutaMovimieto extends Model
 {
-	protected $table = 'hojaderuta_movimietos';
+	protected $table = 'hdr_movimientos';
 	protected $primaryKey = 'idMovimientos';
 	public $incrementing = false;
 	public $timestamps = false;
@@ -43,5 +43,13 @@ class HojaderutaMovimieto extends Model
 	public function movimiento()
 	{
 		return $this->belongsTo(Movimiento::class, 'idMovimientos');
+	}
+
+	public function jsonSerialize(): mixed
+	{
+		return [
+			'idMovimientos' => $this->movimiento(),
+			'idHojaDeRuta' => $this->hojaderutum()
+		];
 	}
 }

@@ -34,4 +34,13 @@ class Coch extends Model
 	{
 		return $this->hasMany(CamionerosCoch::class, 'patente');
 	}
+
+	public function jsonSerialize(): mixed
+	{
+		return [
+			'patente' => $this->patente,
+			'tipoCoche' => $this->tipoCoche,
+			'conductor' => $this->camioneros_coches()
+		];
+	}
 }

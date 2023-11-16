@@ -27,7 +27,7 @@ class Remito extends Model
 {
 	protected $table = 'remitos';
 	protected $primaryKey = 'idRemitos';
-	public $incrementing = false;
+	public $incrementing = true;
 	public $timestamps = false;
 
 	protected $casts = [
@@ -38,7 +38,8 @@ class Remito extends Model
 	protected $fillable = [
 		'remitente',
 		'destinatario',
-		'fechaEmision'
+		'fechaEmision',
+		'destino'
 	];
 
 	public function lotes()
@@ -49,5 +50,17 @@ class Remito extends Model
 	public function remitos_productosalmacen()
 	{
 		return $this->hasOne(RemitosProductosalmacen::class, 'idRemitos');
+	}
+
+	public function jsonSerialize(): mixed
+	{
+		return [
+			'idRemito' => $this->idRemitos,
+			'remitente' => $this->remitente,
+			'destinatario' => $this->destinatario,
+			'destino' => $this->destino,
+			'fechaEmision' => $this->fechaEmision,
+			'rut' => $this->rut
+		];
 	}
 }

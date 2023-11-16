@@ -50,4 +50,12 @@ class Ruta extends Model
 	{
 		return $this->hasMany(Nodo::class, 'idRutas');
 	}
+
+	public function jsonSerialize(): mixed
+	{
+		return [
+			'idRutas' => $this->idRutas,
+			'nombreRuta' => $this->nombreRuta,
+		];
+	}
 }

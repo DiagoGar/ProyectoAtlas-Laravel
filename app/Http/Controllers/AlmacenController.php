@@ -6,6 +6,8 @@ use App\Models\Nodo;
 use App\Models\Nododireccion;
 use App\Models\Ruta;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Request as FacadesRequest;
 
 class AlmacenController extends Controller
 {
@@ -19,7 +21,6 @@ class AlmacenController extends Controller
     {
         $nodoDireccion = Nododireccion::all();
         return view('almacenes.index')->with('nodos',$nodoDireccion);
-        //no funciona de momento
     }
 
     /**
@@ -35,6 +36,7 @@ class AlmacenController extends Controller
      */
     public function store(Request $request)
     {
+        
         $ruta = new Ruta();
         $nodo = new Nodo();
         $nodoDireccion = new Nododireccion();
@@ -54,14 +56,14 @@ class AlmacenController extends Controller
 
         $nodoDireccion->save();
 
-        return view('almacenes.store', [
+        return [
             'nombreNodo' => $nodo->nombreNodo,
             'esFinal' => $nodo->esFinal,
             'ciudad' => $nodoDireccion->ciudad,
             'calle' => $nodoDireccion->calle,
             'rutaAcceso' => $nodoDireccion->rutaAcceso,
             'numeroPuerta' => $nodoDireccion->numeroPuerta
-        ]);
+        ];
     }
 
     /**
@@ -122,6 +124,6 @@ class AlmacenController extends Controller
     public function destroy(Request $request)
     {
         $nodo = Nododireccion::destroy($request->id);
-        return $nodo;
+        return redirect("/api/almacen");
     }
 }
