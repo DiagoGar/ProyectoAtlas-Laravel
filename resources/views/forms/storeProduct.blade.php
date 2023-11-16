@@ -3,7 +3,7 @@
 @section('title', 'Ingreso de Prodcuto')
 
 @section('form')
-  <form action="/api/productos" method="POST" class="mt-48 bg-orange-500 rounded-xl" style="width: 40vw">
+  <form action="{{ url('/api/productos') }}" method="POST" class="mt-48 bg-orange-500 rounded-xl" style="width: 40vw">
     @csrf
     <div
       class="max-w-2xl mx-auto p-6 rounded-md shadow-lg flex justify-between bg-orange-500"

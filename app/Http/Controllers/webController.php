@@ -32,7 +32,8 @@ class webController extends Controller
 
   public function storeLote(){
     $cedulafuncionario = Tipofuncionario::select('cedulaFuncionario')->get();
-    return view('forms.storeLote', ['funcionario' => $cedulafuncionario]);
+    $nodos = Nodo::select('*')->get();
+    return view('forms.storeLote', ['funcionarios' => $cedulafuncionario , 'nodos' => $nodos]);
   }
 
   public function verProductoInLote(Request $request){
@@ -98,9 +99,23 @@ class webController extends Controller
       'cc' => $cc
     ];
 
-    // return $hdrcc;
+    // return $data;
     return view('forms.insertLoteInCoche', ['data' => $data]);
 
+  }
+
+  public function bajarLote (Request $request){
+    $loteInCoche = Lote::select('lotes.*')
+    ->join('lotes_movimientos', 'lotes.idLotes', '=', 'lotes_movimientos.idLotes')
+    ->join('movimientos', 'lotes_movimientos.idMovimientos', '=', 'movimientos.idMovimientos')
+    ->join('hdr_movimientos', 'movimientos.idMovimientos', '=', 'hdr_movimientos.idMovimientos')
+    ->join('hojaderuta_camioneroscoches', 'hdr_movimientos.idHojaDeRuta', '=', 'hojaderuta_camioneroscoches.idHojaDeRuta')
+    ->whereNull('movimientos.fechaLlegada')
+    ->where('movimientos.estado', 'En camino')
+    ->distinct()
+    ->get();
+
+    return view('forms.bajarLote', ['lote' => $loteInCoche]);
   }
 
   // --------/-\/-\/-\--------Products Section--------/-\/-\/-\-------- //
@@ -158,6 +173,7 @@ class webController extends Controller
       $start_location[] = $step['start_location'];
       $end_location[] = $step['end_location'];
     }
+    $cc = CamionerosCoch::all();
 
 
     $data = [
@@ -165,6 +181,7 @@ class webController extends Controller
       'distance' => $distance,
       'start_location' => $start_location,
       'end_location' => $end_location,
+      'cc' => $cc
     ];
 
     return view('map.viewSteps', ['data' => $data]);

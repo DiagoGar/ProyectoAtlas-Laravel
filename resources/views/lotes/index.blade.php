@@ -28,7 +28,7 @@
           <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 text-center">
             <td class="p-5">CI 46665550</td>
             <td class="p-5">{{ $item['idLotes']}}</td>
-            <td class="p-5">{{ $item['cantidad']}}</td>
+            <td class="p-5">{{ $item['cantidadProductos']}}</td>
             <td>
                 {{-- <button><a href="http://localhost:8000/api/almacen/?id=" . $item['idNodos']>Eliminar</a></button> --}}
                 <button><a>Editar</a></button>
@@ -40,9 +40,14 @@
     </table>
 </div>
 
-<div class="text-center my-5">
-  <Button class="my-3 bg-orange-400 py-3 px-5 rounded-xl"><a href="/crearLote">Crear Lote</a></Button>
-  <Button class="my-3 bg-orange-400 py-3 px-5 rounded-xl"><a href="/loteInCoche">Ver Lotes en camion</a></Button>
+<div class="grid grid-cols-4 gap-3 justify-center mt-5">
+  <div class="col-span-1"></div>
+  <Button class="my-3 col-span-1 bg-orange-400 py-3 px-5 rounded-xl"><a href="{{ url('/crearLote') }}">Crear Lote</a></Button>
+  <Button class="my-3 col-span-1 bg-orange-400 py-3 px-5 rounded-xl"><a href="{{ url('/loteInCoche') }}">Ver Lotes en camion</a></Button>
+  <div class="col-span-1"></div>
+</div>
+<div class="flex justify-center mt-8">
+  <Button class="bg-orange-400 py-3 px-5 rounded-xl"><a href="{{ url('/insertLoteInCoche') }}">Insertar lote en camion</a></Button>
 </div>
 
 @endsection

@@ -3,7 +3,7 @@
 @section('title', 'Lote en coche')
 
 @section('form')
-<form action="/api/loteInCoche/" method="POST" class="mt-64">
+<form action="{{ url('/api/loteInCoche/') }}" method="POST" class="mt-64">
   @csrf
   <div
     class="max-w-2xl mx-auto p-6 rounded-md shadow-lg flex justify-between bg-orange-500"
@@ -55,12 +55,12 @@
               </div>
             </div>
             
-            <div class="flex flex-col items-start mt-9">
+            {{-- <div class="flex flex-col items-start mt-9">
               <div class="flex justify-center items-center">
               <label for="fechaLlegada" class="block mb-1 mx-1 text-gray-800 mr-2">fecha llegada</label>
                 <input type="date" name="fechaLlegada" class="text-black">
               </div>
-          </div>
+          </div> --}}
 
             <div class="flex flex-col items-start">
               <div class="relative">
@@ -70,7 +70,7 @@
                 <ul id="dropdownMenu" class="hidden absolute mt-2 space-y-2 bg-white text-gray-800 rounded-md shadow-md">
                   @foreach ($data['lotes'] as $item)    
                     <div class="flex justify-center items-center">
-                      <input type="checkbox" name="idLotes" class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded mr-6" value="{{$item->idLotes}}">
+                      <input type="checkbox" name="idLotes[]" class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded mr-6" value="{{$item->idLotes}}">
                       <label for="example-checkbox" class="ml-2 text-sm text-gray-600">id: {{$item->idLotes}}</label>
                     </div>
                   @endforeach

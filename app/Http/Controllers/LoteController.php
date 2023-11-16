@@ -5,13 +5,17 @@ namespace App\Http\Controllers;
 use App\Models\Almacen;
 use App\Models\Coch;
 use App\Models\HojaderutaCamioneroscoch;
+use App\Models\HojaderutaMovimieto;
 use App\Models\Hojaderutum;
 use Illuminate\Http\Request;
 use App\Models\Lote;
 use App\Models\LoteRemitosproductosalmacen;
 use App\Models\LotesMovimiento;
 use App\Models\Movimiento;
+use App\Models\Nodo;
 use App\Models\Producto;
+use App\Models\ProductosAlmacen;
+use App\Models\Remito;
 use App\Models\RemitosProductosalmacen;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -46,6 +50,10 @@ class LoteController extends Controller
 
             $lote->save();
 
+            $idRutas = Nodo::where('idNodos', $request->idNodo)->pluck('idRutas');
+
+            $movimeinto->idNodos = $request->idNodo;
+            $movimeinto->idRutas = $idRutas[0];
             $movimeinto->estado = "Despachado";
             $movimeinto->fechaLlegada = $request->fechaLlegada;
 
@@ -125,16 +133,16 @@ class LoteController extends Controller
         return $query;
     }
 
-    public function GuardarLoteInNodo(Request $request)
-    {
-        $movimeinto = Movimiento::find($request->idMovimiento);
-        $movimeinto->idNodos = $request->idNodo;
+    // public function GuardarLoteInNodo(Request $request)
+    // {
+    //     $movimeinto = Movimiento::find($request->idMovimiento);
+    //     $movimeinto->idNodos = $request->idNodo;
 
-        $movimeinto->save();
+    //     $movimeinto->save();
 
-        return $movimeinto;
-        //return redirect
-    }
+    //     return $movimeinto;
+    //     //return redirect
+    // }
 
     public function verLoteInCoche(Request $request){
 
@@ -143,9 +151,11 @@ class LoteController extends Controller
             ->select('coches.patente', 'lotes.idLotes')
             ->join('hojaderuta_camioneroscoches', 'coches.patente', '=', 'hojaderuta_camioneroscoches.patente')
             ->join('hojaderuta', 'hojaderuta_camioneroscoches.idHojaDeRuta', '=', 'hojaderuta.idHojaDeRuta')
-            ->join('movimientos', 'hojaderuta.idHojaDeRuta', '=', 'movimientos.idHojaDeRuta')
+            ->join('hdr_movimientos', 'hojaderuta.idHojaDeRuta', '=', 'hdr_movimientos.idHojaDeRuta')
+            ->join('movimientos', 'hdr_movimientos.idMovimientos', '=', 'movimientos.idMovimientos')
             ->join('lotes_movimientos', 'movimientos.idMovimientos', '=', 'lotes_movimientos.idMovimientos')
             ->join('lotes', 'lotes_movimientos.idLotes', '=', 'lotes.idLotes')
+            ->distinct()
             ->get();
         
             return $loteInCoche;
@@ -155,10 +165,13 @@ class LoteController extends Controller
             ->select('coches.patente', 'lotes.idLotes')
             ->join('hojaderuta_camioneroscoches', 'coches.patente', '=', 'hojaderuta_camioneroscoches.patente')
             ->join('hojaderuta', 'hojaderuta_camioneroscoches.idHojaDeRuta', '=', 'hojaderuta.idHojaDeRuta')
-            ->join('movimientos', 'hojaderuta.idHojaDeRuta', '=', 'movimientos.idHojaDeRuta')
+            ->join('hdr_movimientos', 'hojaderuta.idHojaDeRuta', '=', 'hdr_movimientos.idHojaDeRuta')
+            ->join('movimientos', 'hdr_movimientos.idMovimientos', '=', 'movimientos.idMovimientos')
             ->join('lotes_movimientos', 'movimientos.idMovimientos', '=', 'lotes_movimientos.idMovimientos')
             ->join('lotes', 'lotes_movimientos.idLotes', '=', 'lotes.idLotes')
             ->where('coches.patente', $coche->patente)
+            ->where('movimientos.estado', 'en camino')
+            ->distinct()
             ->get();
         
             return $loteInCoche;
@@ -168,41 +181,146 @@ class LoteController extends Controller
     public function insertLoteInCoche(Request $request)
     {
 
-        $hdr = new Hojaderutum();
-        $movimiento = new Movimiento();
-        $lotesMovimiento = new LotesMovimiento();
-        $hdrcc = new HojaderutaCamioneroscoch();
+        $lotes = $request->input('idLotes');
+
+        foreach ($lotes as $lote) {
+            $i = 0;
+            $idNodosQuery = LotesMovimiento::select('movimientos.idNodos')
+            ->join('movimientos', 'lotes_movimientos.idMovimientos', '=', 'movimientos.idMovimientos')
+            ->where('lotes_movimientos.idLotes', '=', $lote)
+            ->get();
+        
+            $idNodos = $idNodosQuery[$i]->idNodos;
+
+            $idRutas = Nodo::where('idNodos', $idNodos)->pluck('idRutas');
+        
+            $i++;
+        }
 
         try{
             DB::beginTransaction();
 
-            $hdr->idRutas = $request->hdridRutas;
-            $hdr->save();
+            foreach($lotes as $lote){
+                $hdr = new Hojaderutum();
+                $movimiento = new Movimiento();
+                $lotesMovimiento = new LotesMovimiento();
+                $hdrcc = new HojaderutaCamioneroscoch();
 
-            $movimiento->idRutas = $request->hdridRutas; // tiene que ser el mismo idRtuas que el ingresado en hdr
-            $movimiento->idHojaDeRuta = Hojaderutum::all()->last()->idHojaDeRuta; // el idHojaDeRuta tiene que existir en HojaDeRuta y tiene que tener la misma ruta que HojaDeRutas->idRutas
-            $movimiento->estado = "En camino";
-            $movimiento->fechaEstimada = $request->fechaEstimada;
-            $movimiento->fechaLlegada = $request->fechaLlegada;
-            $movimiento->save();
+                $movimiento->idNodos = $idNodos;
+                $movimiento->idRutas = $idRutas[0]; // tiene que ser el mismo idRtuas que el ingresado en hdr
+                $movimiento->estado = "En camino";
+                $movimiento->fechaEstimada = $request->fechaEstimada;
+                $movimiento->fechaLlegada = $request->fechaLlegada;
+                $movimiento->save();
 
-            $lotesMovimiento->idMovimientos = Movimiento::all()->last()->idMovimientos;
-            $lotesMovimiento->idLotes = $request->idLotes;
-            $lotesMovimiento->save();
+                $lotesMovimiento->idMovimientos = Movimiento::all()->last()->idMovimientos;
+                $lotesMovimiento->idLotes = $lote;
+                $lotesMovimiento->save();
 
-            $hdrcc->idHojaDeRuta = Movimiento::all()->last()->idHojaDeRuta;
+                $hdr->idRutas = $idRutas[0];
+                $hdr->save();
+
+                $idhdr = Movimiento::join('lotes_movimientos', 'movimientos.idMovimientos', '=', 'lotes_movimientos.idMovimientos')
+                ->join('lotes', 'lotes_movimientos.idLotes', '=', 'lotes.idLotes')
+                ->where('lotes.idLotes', '=', $lote)
+                ->select('movimientos.idMovimientos')
+                ->get(); 
+
+                $idMovimiento = Movimiento::select('movimientos.idMovimientos')
+                ->join('lotes_movimientos', 'movimientos.idMovimientos', '=', 'lotes_movimientos.idMovimientos')
+                ->where('lotes_movimientos.idLotes', $lote)
+                ->get();
+
+                foreach($idMovimiento as $item){
+                    $hdrm = new HojaderutaMovimieto();
+                    $hdrm->idHojaDeRuta = Hojaderutum::all()->last()->idHojaDeRuta;
+                    $hdrm->idMovimientos = $item->idMovimientos;
+                    $hdrm->save();
+                }
+
+            }
+
+            $hdrcc->idHojaDeRuta = Hojaderutum::all()->last()->idHojaDeRuta;
             $hdrcc->patente = $request->patente;
             $hdrcc->cedulaCamionero = $request->cedula;
             $hdrcc->fechaArranque = Carbon::today();
             $hdrcc->save();
 
             DB::commit();
-            return redirect('/loteInCoche/' . $request->patente);
+            return redirect('loteInCoche/' . $request->patente);
 
 
         } catch(\Exception $e) {
             DB::rollBack();
             return json_encode($e);
+        }
+
+    }
+
+    public function bajarLoteInNodo(Request $request){
+        try{
+
+            $lote = Lote::findOrFail($request->idLotes);
+            $idLote = $lote->idLotes;
+
+            $datos = Movimiento::select('idNodos', 'idRutas')
+            ->join('lotes_movimientos', 'movimientos.idMovimientos', '=', 'lotes_movimientos.idMovimientos')
+            ->where('lotes_movimientos.idLotes', $idLote)
+            ->distinct()
+            ->get();
+            $datos = $datos[0];
+
+            DB::beginTransaction();
+
+            $lastIdM = Movimiento::join('lotes_movimientos', 'movimientos.idMovimientos', '=', 'lotes_movimientos.idMovimientos')
+            ->where('lotes_movimientos.idLotes', 43)
+            ->where('movimientos.estado', 'en camino')
+            ->pluck('movimientos.idMovimientos');
+
+            $mov = Movimiento::find($lastIdM[0]);
+            $mov->idNodos = $datos->idNodos;
+            $mov->idRutas = $datos->idRutas;
+            $mov->fechaLlegada = Carbon::today();
+            $mov->save();
+
+
+            $movimiento = new Movimiento();
+            $movimiento->idNodos = $datos->idNodos;
+            $movimiento->idRutas = $datos->idRutas;
+            $movimiento->estado = 'Entregado';
+            $movimiento->fechaLlegada = Carbon::today();
+            $movimiento->save();
+
+            // $coche = Coch::findOrFail($request->patente);
+            // $loteInCoche =  DB::table('movimientos')
+            // ->select('*')
+            // ->join('hojaderuta_camioneroscoches', 'coches.patente', '=', 'hojaderuta_camioneroscoches.patente')
+            // ->join('hojaderuta', 'hojaderuta_camioneroscoches.idHojaDeRuta', '=', 'hojaderuta.idHojaDeRuta')
+            // ->join('movimientos', 'hojaderuta.idHojaDeRuta', '=', 'movimientos.idHojaDeRuta')
+            // ->join('lotes_movimientos', 'movimientos.idMovimientos', '=', 'lotes_movimientos.idMovimientos')
+            // ->join('lotes', 'lotes_movimientos.idLotes', '=', 'lotes.idLotes')
+            // ->where('coches.patente', $coche->patente)
+            // ->where('movimientos.estado', 'en camino')
+            // ->distinct()
+            // ->get();
+
+            $destinatario = Producto::select('remitos.destinatario')
+            ->join('productos_almacen', 'productos.idProductos', '=', 'productos_almacen.idProductos')
+            ->join('remitos_productosalmacen', 'productos_almacen.idProductos', '=', 'remitos_productosalmacen.idProductos')
+            ->join('remitos', 'remitos_productosalmacen.idRemitos', '=', 'remitos.idRemitos')
+            ->join('lote_remitosproductosalmacen', 'remitos.idRemitos', '=', 'lote_remitosproductosalmacen.idRemitos')
+            ->join('lotes', 'lote_remitosproductosalmacen.idLotes', '=', 'lotes.idLotes')
+            ->where('lotes.idLotes', '=', $idLote)
+            ->get();
+
+// Eliminar registros en cascada
+
+            DB::commit();
+            return "Lote bajado con exito";
+
+        }catch(\Exception $e){
+            DB::rollBack();
+            return $e;
         }
 
     }

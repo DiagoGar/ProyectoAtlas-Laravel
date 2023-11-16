@@ -4,7 +4,7 @@
 
 @section('form')
 
-<form action="/api/productosInLote/" method="POST" class="mt-64">
+<form action="{{ url('/api/productosInLote/')}}" method="POST" class="mt-64">
     @csrf
     <div
       class="max-w-2xl mx-auto p-6 rounded-md shadow-lg flex justify-between bg-orange-500"

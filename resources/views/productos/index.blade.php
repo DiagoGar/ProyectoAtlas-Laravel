@@ -30,8 +30,8 @@
             <td class="p-5">{{ $item['nobreProducto']}}</td>
             <td class="p-5">{{ $item['pesoProducto']}} Kg</td>
             <td>
-                <button><a href="api/productos/{{ $item['idProductos'] }}">Eliminar</a></button>
-                <button><a href="/edita-producto/{{$item['idProductos']}}">Editar</a></button>
+                <button><a href="{{ url('/api/productos/' . $item['idProductos']) }}">Eliminar</a></button>
+                <button><a href="{{ url('/edita-producto/' . $item['idProductos']) }}">Editar</a></button>
             </td>
           </tr>
           @endforeach
@@ -41,6 +41,7 @@
 
 <div class="text-center my-5">
   <Button class="my-3 bg-orange-400 p-3 rounded-xl"><a href="{{ route('storeProduct')}}">Agregar Producto</a></Button>
+  <Button class="my-3 bg-orange-400 p-3 rounded-xl"><a href="{{ url('/lotes') }}">Ver Lotes</a></Button>
 </div>
 
 @endsection

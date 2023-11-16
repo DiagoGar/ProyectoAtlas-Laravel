@@ -3,7 +3,7 @@
 @section('title', 'Mapa')
 
 @section('form')
-<form action="/viewMap" method="GET" class="mt-64 text-center">
+<form action="{{ url('viewMap')}}" method="GET" class="mt-64 text-center">
   <button id="btn" class="mb-9 w-6/12">AVISO</button>
     <script>
       $(document).ready(function () {
@@ -28,7 +28,7 @@
       <div class="mb-4">
         <label for="destination" class="block mb-1 text-black-800">Punto de llegada</label>
         <div class="mt-1 relative">
-          <select name="destination">
+          <select name="destination" class="text-black">
             @foreach ($data as $item)
             <option value="{{$item['ciudad'] . " " . $item['calle']}}" class="text-black-800">Nodo {{$item['ciudad'] . " " . $item['calle']}}</option>
             @endforeach
