@@ -59,9 +59,9 @@
     <div class="container">
       <div class="botones">
         <button class="login-button">Iniciar Sesión</button>
-        <a href="http://localhost:8080/ProyectoAtlas-Laravel/public/lotes"><button class="register-button">Ver lotes</button></a>
-        <button><a href="{{ route('show')}}" class="generate-button">Ver nodos</a></button>
-        <button class="track-button">Rastrear un envío</button>
+        <a href="{{ url('/lotes') }}"><button class="register-button">Ver lotes</button></a>
+        <a href="{{ route('show') }}" class="generate-button"><a href="{{ url('/productos') }}"></a><button>Ver productos</button></a>
+        <a href="{{ url('/mapData') }}" class="track-button"><button>Ver Mapa</button></a>
       </div>
     </div>
     <footer class="footer">

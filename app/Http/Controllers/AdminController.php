@@ -8,6 +8,7 @@ use App\Models\Tipocamionero;
 use Illuminate\Http\Request;
 use App\Models\Tipofuncionario;
 use App\Models\Usuario;
+use Illuminate\Support\Facades\DB;
 
 class AdminController extends Controller
 {
@@ -16,12 +17,13 @@ class AdminController extends Controller
 
     public function indexUsuario(){
         $usuario = Usuario::all();
-        return $usuario;
+        return view('admin.usuario.Usuarios', ['data' => $usuario]);
     }
 
     public function Usuario(Request $request){
-        $usuario = Usuario::find($request->id);
+        $usuario = Usuario::find($request->cedula);
         return $usuario;
+        return view('admin.usuario.Usuario', ['data' => $usuario]);
     }
 
     public function storeUsuario(Request $request){
@@ -52,21 +54,49 @@ class AdminController extends Controller
     }
 
     public function Funcionario(Request $request){
-        $funcionario = Tipofuncionario::find($request->id);
+        $funcionario = Tipofuncionario::find($request->cedula);
         return $funcionario;
     }
 
+    public function viewStoreFuncionario(){
+        $usuario = Usuario::all();
+        return view('admin.funcionario.storeFuncionario', ['usuario' => $usuario]);
+    }
+
     public function storeFuncionario(Request $request){
-        $funcionario = new Tipofuncionario();
-        $funcionario->cedulaFuncionario = $request->cedula;
-        $funcionario->cargo = $request->cargo;
-        $funcionario->save();
+        try{
+            DB::beginTransaction();
+            $funcionario = new Tipofuncionario();
+            $funcionario->cedulaFuncionario = $request->cedula;
+            $funcionario->cargo = $request->cargo;
+            $funcionario->save();
+
+            DB::commit();
+            return redirect('/funcionarios');
+        }catch(\Exception $e){
+            DB::rollBack();
+            return "No se puedo crear este usuario: verifique que este usuario no sea de otro tipo";
+        }
+    }
+
+    public function viewUpdateFuncionario(Request $request){
+        $funcionario = Tipofuncionario::find($request->cedula);
+        return view('admin.funcionario.updateFuncionario', ['funcionario' => $funcionario]);
     }
 
     public function updateFuncionario(Request $request){
-        $funcionario = Tipofuncionario::find($request->cedula);
-        $funcionario->cedulaFuncionario = $request->cedula;
-        $funcionario->cargo = $request->cargo;
+        try{
+            DB::beginTransaction();
+            $funcionario = Tipofuncionario::find($request->cedula);
+            $funcionario->cedulaFuncionario = $request->cedula;
+            $funcionario->cargo = $request->cargo;
+
+            DB::commit();
+            return redirect('/funcionarios');
+        }catch(\Exception $e){
+            DB::rollBack();
+            return "No se puedo editar a este usuario: verifique los datos que ingreso";
+        }
     }
 
     // ================================= Camioneros ================================= \\

@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\EnviosMailable;
 use App\Models\Nododireccion;
+use Iya30n\DynamicAcl\Models\Role;
 
 /*
 |--------------------------------------------------------------------------
@@ -54,10 +55,14 @@ Route::get('/viewMap', [webController::class, 'verMapa']);
 Route::view('/admin', 'admin.deshboard');
 
 Route::get('/admin/usuarios', [AdminController::class, 'indexUsuario']);
+Route::get('/admin/usuario/{cedula}', [AdminController::class, 'Usuario']);
 
-Route::view('/admin/funcionarios', 'admin.funcionarios', ['data' => \App\Models\Tipofuncionario::all()]);
-Route::view('/admin/funcionario', 'admin.funcionario', ['data' => \App\Models\Usuario::all()]);
-Route::view('/admin/CrearFuncionario', [AdminController::class, 'storeFuncionario']);
+Route::get('/admin/funcionarios', [AdminController::class, 'indexFuncionario']);
+Route::get('/admin/funcionario/{cedula}', [AdminController::class, 'Funcionario']);
+Route::get('/admin/storeFuncionario', [AdminController::class, 'viewStoreFuncionario']);
+Route::get('/admin/CrearFuncionario', [AdminController::class, 'storeFuncionario']);
+Route::get('/admin/UpdateFuncionario/{cedula}', [AdminController::class, 'viewUpdateFuncionario']);
+Route::get('/admin/EditarFuncionario', [AdminController::class, 'updateFuncionario']);
 
 Route::get('/admin/camioneros', [AdminController::class, 'indexCamioneros']);
 
